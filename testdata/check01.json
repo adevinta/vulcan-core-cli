@@ -1,0 +1,18 @@
+{
+	"check": {
+		"id": "7782cb8e-e697-41a3-8f2d-be85aa673ca7",
+		"target": "www.example.com",
+		"status": "RUNNING",
+		"score": 55.0,
+		"progress": 0.0,
+		"checktype": {
+			"id": "deffe349-cbee-4d79-8367-71b76e9c9f20",
+			"name": "nmap",
+			"description": "Description for checktype fixture 1",
+			"timeout": 100,
+			"enabled": false,
+			"options": "-T -a -test",
+			"image": "dockerimage1"
+		}
+	}
+}

@@ -1,0 +1,1255 @@
+consumes:
+- application/json
+definitions:
+  Agent:
+    description: Agent media type (default view)
+    example:
+      agent:
+        enabled: false
+        heartbet_at: "2004-08-23T19:32:20Z"
+        id: bf04b35d-dcb1-4082-bf64-7847ae29c7cf
+        jobqueue:
+          jobqueue:
+            arn: Mollitia cupiditate molestiae saepe quis ducimus.
+            description: Ex totam.
+            enabled: false
+            id: 28f01c3f-9414-42b4-98ae-1d4b23b96a57
+        status: RUNNING
+        version: Eos cumque ab.
+    properties:
+      agent:
+        $ref: '#/definitions/Agentdata'
+    required:
+    - agent
+    title: 'Mediatype identifier: application/vnd.agent+json; view=default'
+    type: object
+  AgentData:
+    example:
+      id: 34be4597-83fd-4628-a573-9c8358591a04
+      status: RUNNING
+    properties:
+      id:
+        example: 34be4597-83fd-4628-a573-9c8358591a04
+        format: uuid
+        type: string
+      status:
+        example: RUNNING
+        minLength: 1
+        pattern: ^[[:word:]]+
+        type: string
+    required:
+    - id
+    - status
+    title: AgentData
+    type: object
+  Agentdata:
+    description: Agentdata media type (default view)
+    example:
+      enabled: false
+      heartbet_at: "2004-08-23T19:32:20Z"
+      id: bf04b35d-dcb1-4082-bf64-7847ae29c7cf
+      jobqueue:
+        jobqueue:
+          arn: Mollitia cupiditate molestiae saepe quis ducimus.
+          description: Ex totam.
+          enabled: false
+          id: 28f01c3f-9414-42b4-98ae-1d4b23b96a57
+      status: RUNNING
+      version: Eos cumque ab.
+    properties:
+      enabled:
+        example: false
+        type: boolean
+      heartbet_at:
+        example: "2004-08-23T19:32:20Z"
+        format: date-time
+        type: string
+      id:
+        example: bf04b35d-dcb1-4082-bf64-7847ae29c7cf
+        format: uuid
+        type: string
+      jobqueue:
+        $ref: '#/definitions/Jobqueue'
+      status:
+        example: RUNNING
+        minLength: 1
+        pattern: ^[[:word:]]+
+        type: string
+      version:
+        example: Eos cumque ab.
+        type: string
+    required:
+    - id
+    - status
+    - version
+    - enabled
+    - heartbet_at
+    - jobqueue
+    title: 'Mediatype identifier: application/vnd.agentdata+json; view=default'
+    type: object
+  Agentjobqueuedata:
+    description: Agentjobqueuedata media type (default view)
+    example:
+      arn: Mollitia cupiditate molestiae saepe quis ducimus.
+      description: Ex totam.
+      enabled: false
+      id: 28f01c3f-9414-42b4-98ae-1d4b23b96a57
+    properties:
+      arn:
+        example: Mollitia cupiditate molestiae saepe quis ducimus.
+        type: string
+      description:
+        example: Ex totam.
+        type: string
+      enabled:
+        example: false
+        type: boolean
+      id:
+        example: 28f01c3f-9414-42b4-98ae-1d4b23b96a57
+        format: uuid
+        type: string
+    required:
+    - id
+    - arn
+    - description
+    - enabled
+    title: 'Mediatype identifier: application/vnd.agentjobqueuedata+json; view=default'
+    type: object
+  Agents:
+    description: Agents media type (default view)
+    example:
+      agents:
+      - id: 34be4597-83fd-4628-a573-9c8358591a04
+        status: RUNNING
+      - id: 34be4597-83fd-4628-a573-9c8358591a04
+        status: RUNNING
+      - id: 34be4597-83fd-4628-a573-9c8358591a04
+        status: RUNNING
+    properties:
+      agents:
+        example:
+        - id: 34be4597-83fd-4628-a573-9c8358591a04
+          status: RUNNING
+        - id: 34be4597-83fd-4628-a573-9c8358591a04
+          status: RUNNING
+        - id: 34be4597-83fd-4628-a573-9c8358591a04
+          status: RUNNING
+        items:
+          $ref: '#/definitions/AgentData'
+        type: array
+    required:
+    - agents
+    title: 'Mediatype identifier: application/vnd.agents+json; view=default'
+    type: object
+  Assettype:
+    description: Assettype media type (default view)
+    example:
+      assettype: DomainName
+      name:
+      - Deserunt itaque.
+    properties:
+      assettype:
+        example: DomainName
+        type: string
+      name:
+        example:
+        - Deserunt itaque.
+        items:
+          example: Deserunt itaque.
+          type: string
+        type: array
+    title: 'Mediatype identifier: application/vnd.assettype+json; view=default'
+    type: object
+  AssettypeCollection:
+    description: AssettypeCollection is the media type for an array of Assettype (default
+      view)
+    example:
+    - assettype: DomainName
+      name:
+      - Deserunt itaque.
+    - assettype: DomainName
+      name:
+      - Deserunt itaque.
+    - assettype: DomainName
+      name:
+      - Deserunt itaque.
+    items:
+      $ref: '#/definitions/Assettype'
+    title: 'Mediatype identifier: application/vnd.assettype+json; type=collection;
+      view=default'
+    type: array
+  Check:
+    description: Check media type (default view)
+    example:
+      check:
+        checktype:
+          description: r690263xo9
+          enabled: false
+          id: 8c5644b0-7f02-4a94-a2db-57098533f72d
+          image: Porro omnis.
+          name: nmap
+          options: Dolores qui sit quia eaque consequatur.
+          timeout: 1.6102918297281293e+18
+        id: 03005805-8ed4-4f3f-8edb-3ea4448c20a9
+        options: '{ "policy" : "fullscan" }'
+        progress: 0.6709447722201115
+        raw: Rerum facilis doloremque nisi aut vitae distinctio.
+        report: Sunt laudantium porro est.
+        scan:
+          id: bb7b2304-5847-43bb-ac0f-4a9d6dc95922
+          size: 2.281809422698555e+17
+        status: Nulla et autem.
+        target: www.example.com
+        webhook: https://webhook.example.com/callback
+    properties:
+      check:
+        $ref: '#/definitions/Checkdata'
+    required:
+    - check
+    title: 'Mediatype identifier: application/vnd.check+json; view=default'
+    type: object
+  CheckData:
+    example:
+      checktype_name: Atque ad sint occaecati omnis et.
+      jobqueue_id: 1624dd77-a9ef-4550-bcb9-f76de39217ec
+      options: '{ "policy" : "fullscan" }'
+      tag: sdrn
+      target: www.example.com
+      webhook: https://webhook.example.com/callback
+    properties:
+      checktype_name:
+        description: Name of the checktype this check is
+        example: Atque ad sint occaecati omnis et.
+        type: string
+      jobqueue_id:
+        description: "ID of the specific queue this check must we enqueued.\n\t\tThe
+          queue must already be created in vulcan core."
+        example: 1624dd77-a9ef-4550-bcb9-f76de39217ec
+        format: uuid
+        type: string
+      options:
+        description: Configuration options for the Check. It should be in JSON format
+        example: '{ "policy" : "fullscan" }'
+        minLength: 2
+        pattern: ^[[:print:]]+
+        type: string
+      tag:
+        description: a tag
+        example: sdrn
+        minLength: 3
+        type: string
+      target:
+        description: Target to be scanned. Can be a domain, hostname, IP or URL
+        example: www.example.com
+        minLength: 1
+        pattern: ^[[:print:]]+
+        type: string
+      webhook:
+        description: Webhook to callback after the Check has finished
+        example: https://webhook.example.com/callback
+        format: uri
+        minLength: 3
+        type: string
+    required:
+    - target
+    title: CheckData
+    type: object
+  CheckPayload:
+    example:
+      check:
+        checktype_name: Atque ad sint occaecati omnis et.
+        jobqueue_id: 1624dd77-a9ef-4550-bcb9-f76de39217ec
+        options: '{ "policy" : "fullscan" }'
+        tag: sdrn
+        target: www.example.com
+        webhook: https://webhook.example.com/callback
+    properties:
+      check:
+        $ref: '#/definitions/CheckData'
+    required:
+    - check
+    title: CheckPayload
+    type: object
+  Checkdata:
+    description: Checkdata media type (default view)
+    example:
+      checktype:
+        description: r690263xo9
+        enabled: false
+        id: 8c5644b0-7f02-4a94-a2db-57098533f72d
+        image: Porro omnis.
+        name: nmap
+        options: Dolores qui sit quia eaque consequatur.
+        timeout: 1.6102918297281293e+18
+      id: 03005805-8ed4-4f3f-8edb-3ea4448c20a9
+      options: '{ "policy" : "fullscan" }'
+      progress: 0.6709447722201115
+      raw: Rerum facilis doloremque nisi aut vitae distinctio.
+      report: Sunt laudantium porro est.
+      scan:
+        id: bb7b2304-5847-43bb-ac0f-4a9d6dc95922
+        size: 2.281809422698555e+17
+      status: Nulla et autem.
+      target: www.example.com
+      webhook: https://webhook.example.com/callback
+    properties:
+      checktype:
+        $ref: '#/definitions/ChecktypeType'
+      id:
+        example: 03005805-8ed4-4f3f-8edb-3ea4448c20a9
+        format: uuid
+        type: string
+      options:
+        description: Configuration options for the Check. It should be in JSON format
+        example: '{ "policy" : "fullscan" }'
+        minLength: 2
+        pattern: ^[[:print:]]+
+        type: string
+      progress:
+        example: 0.6709447722201115
+        format: double
+        type: number
+      raw:
+        example: Rerum facilis doloremque nisi aut vitae distinctio.
+        type: string
+      report:
+        example: Sunt laudantium porro est.
+        type: string
+      scan:
+        $ref: '#/definitions/Scandata'
+      status:
+        example: Nulla et autem.
+        type: string
+      target:
+        description: Target to be scanned. Can be a domain, hostname, IP or URL
+        example: www.example.com
+        minLength: 1
+        pattern: ^[[:print:]]+
+        type: string
+      webhook:
+        description: Webhook to callback after the Check has finished
+        example: https://webhook.example.com/callback
+        format: uri
+        minLength: 3
+        type: string
+    required:
+    - id
+    - checktype
+    - target
+    - status
+    title: 'Mediatype identifier: application/vnd.checkdata+json; view=default'
+    type: object
+  Checks:
+    description: Checks media type (default view)
+    example:
+      checks:
+      - checktype_name: Molestias molestiae.
+        id: 2f814456-1a14-4a4e-9b9e-5f82f93b8218
+        status: Possimus aut officiis illum.
+        target: www.example.com
+      - checktype_name: Molestias molestiae.
+        id: 2f814456-1a14-4a4e-9b9e-5f82f93b8218
+        status: Possimus aut officiis illum.
+        target: www.example.com
+    properties:
+      checks:
+        example:
+        - checktype_name: Molestias molestiae.
+          id: 2f814456-1a14-4a4e-9b9e-5f82f93b8218
+          status: Possimus aut officiis illum.
+          target: www.example.com
+        - checktype_name: Molestias molestiae.
+          id: 2f814456-1a14-4a4e-9b9e-5f82f93b8218
+          status: Possimus aut officiis illum.
+          target: www.example.com
+        items:
+          $ref: '#/definitions/Scancheckdata'
+        type: array
+    required:
+    - checks
+    title: 'Mediatype identifier: application/vnd.checks+json; view=default'
+    type: object
+  Checktype:
+    description: Checktype media type (default view)
+    example:
+      checktype:
+        description: r690263xo9
+        enabled: false
+        id: 8c5644b0-7f02-4a94-a2db-57098533f72d
+        image: Porro omnis.
+        name: nmap
+        options: Dolores qui sit quia eaque consequatur.
+        timeout: 1.6102918297281293e+18
+    properties:
+      checktype:
+        $ref: '#/definitions/ChecktypeType'
+    required:
+    - checktype
+    title: 'Mediatype identifier: application/vnd.checktype+json; view=default'
+    type: object
+  ChecktypeType:
+    example:
+      description: r690263xo9
+      enabled: false
+      id: 8c5644b0-7f02-4a94-a2db-57098533f72d
+      image: Porro omnis.
+      name: nmap
+      options: Dolores qui sit quia eaque consequatur.
+      timeout: 1.6102918297281293e+18
+    properties:
+      description:
+        example: r690263xo9
+        maxLength: 255
+        pattern: ^[[:print:]]+
+        type: string
+      enabled:
+        example: false
+        type: boolean
+      id:
+        example: 8c5644b0-7f02-4a94-a2db-57098533f72d
+        format: uuid
+        type: string
+      image:
+        description: Image that needs to be pulled to run the Check of this type
+        example: Porro omnis.
+        type: string
+      name:
+        example: nmap
+        minLength: 1
+        pattern: ^[[:word:]]+
+        type: string
+      options:
+        description: Default configuration options for the Checktype. It should be
+          in JSON format
+        example: Dolores qui sit quia eaque consequatur.
+        type: string
+      timeout:
+        description: Specifies the maximum amount of time that the check should be
+          running before it's killed
+        example: 1.6102918297281293e+18
+        format: int64
+        type: integer
+    required:
+    - id
+    - name
+    - image
+    title: ChecktypeType
+    type: object
+  Checktypes:
+    description: Checktypes media type (default view)
+    example:
+      checktypes:
+      - description: r690263xo9
+        enabled: false
+        id: 8c5644b0-7f02-4a94-a2db-57098533f72d
+        image: Porro omnis.
+        name: nmap
+        options: Dolores qui sit quia eaque consequatur.
+        timeout: 1.6102918297281293e+18
+    properties:
+      checktypes:
+        example:
+        - description: r690263xo9
+          enabled: false
+          id: 8c5644b0-7f02-4a94-a2db-57098533f72d
+          image: Porro omnis.
+          name: nmap
+          options: Dolores qui sit quia eaque consequatur.
+          timeout: 1.6102918297281293e+18
+        items:
+          $ref: '#/definitions/ChecktypeType'
+        type: array
+    required:
+    - checktypes
+    title: 'Mediatype identifier: application/vnd.checktypes+json; view=default'
+    type: object
+  Jobqueue:
+    description: Jobqueue media type (default view)
+    example:
+      jobqueue:
+        arn: Mollitia cupiditate molestiae saepe quis ducimus.
+        description: Ex totam.
+        enabled: false
+        id: 28f01c3f-9414-42b4-98ae-1d4b23b96a57
+    properties:
+      jobqueue:
+        $ref: '#/definitions/Agentjobqueuedata'
+    required:
+    - jobqueue
+    title: 'Mediatype identifier: application/vnd.jobqueue+json; view=default'
+    type: object
+  Scan:
+    description: Scan media type (default view)
+    example:
+      scan:
+        id: bb7b2304-5847-43bb-ac0f-4a9d6dc95922
+        size: 2.281809422698555e+17
+    properties:
+      scan:
+        $ref: '#/definitions/Scandata'
+    required:
+    - scan
+    title: 'Mediatype identifier: application/vnd.scan+json; view=default'
+    type: object
+  ScanChecksPayload:
+    example:
+      checks:
+      - check:
+          checktype_name: Atque ad sint occaecati omnis et.
+          jobqueue_id: 1624dd77-a9ef-4550-bcb9-f76de39217ec
+          options: '{ "policy" : "fullscan" }'
+          tag: sdrn
+          target: www.example.com
+          webhook: https://webhook.example.com/callback
+      - check:
+          checktype_name: Atque ad sint occaecati omnis et.
+          jobqueue_id: 1624dd77-a9ef-4550-bcb9-f76de39217ec
+          options: '{ "policy" : "fullscan" }'
+          tag: sdrn
+          target: www.example.com
+          webhook: https://webhook.example.com/callback
+    properties:
+      checks:
+        example:
+        - check:
+            checktype_name: Atque ad sint occaecati omnis et.
+            jobqueue_id: 1624dd77-a9ef-4550-bcb9-f76de39217ec
+            options: '{ "policy" : "fullscan" }'
+            tag: sdrn
+            target: www.example.com
+            webhook: https://webhook.example.com/callback
+        - check:
+            checktype_name: Atque ad sint occaecati omnis et.
+            jobqueue_id: 1624dd77-a9ef-4550-bcb9-f76de39217ec
+            options: '{ "policy" : "fullscan" }'
+            tag: sdrn
+            target: www.example.com
+            webhook: https://webhook.example.com/callback
+        items:
+          $ref: '#/definitions/CheckPayload'
+        type: array
+    required:
+    - checks
+    title: ScanChecksPayload
+    type: object
+  ScanData:
+    example:
+      size: 9.124474216245031e+18
+    properties:
+      size:
+        description: Number of checks of the scan
+        example: 9.124474216245031e+18
+        format: int64
+        type: integer
+    required:
+    - size
+    title: ScanData
+    type: object
+  ScanPayload:
+    example:
+      scan:
+        checks:
+        - check:
+            checktype_name: Atque ad sint occaecati omnis et.
+            jobqueue_id: 1624dd77-a9ef-4550-bcb9-f76de39217ec
+            options: '{ "policy" : "fullscan" }'
+            tag: sdrn
+            target: www.example.com
+            webhook: https://webhook.example.com/callback
+        - check:
+            checktype_name: Atque ad sint occaecati omnis et.
+            jobqueue_id: 1624dd77-a9ef-4550-bcb9-f76de39217ec
+            options: '{ "policy" : "fullscan" }'
+            tag: sdrn
+            target: www.example.com
+            webhook: https://webhook.example.com/callback
+    properties:
+      scan:
+        $ref: '#/definitions/ScanChecksPayload'
+    title: ScanPayload
+    type: object
+  Scancheckdata:
+    description: Scancheckdata media type (default view)
+    example:
+      checktype_name: Molestias molestiae.
+      id: 2f814456-1a14-4a4e-9b9e-5f82f93b8218
+      status: Possimus aut officiis illum.
+      target: www.example.com
+    properties:
+      checktype_name:
+        description: Name of the checktype this check is
+        example: Molestias molestiae.
+        type: string
+      id:
+        example: 2f814456-1a14-4a4e-9b9e-5f82f93b8218
+        format: uuid
+        type: string
+      status:
+        example: Possimus aut officiis illum.
+        type: string
+      target:
+        description: Target to be scanned. Can be a domain, hostname, IP or URL
+        example: www.example.com
+        minLength: 1
+        pattern: ^[[:print:]]+
+        type: string
+    required:
+    - id
+    - checktype_name
+    - target
+    - status
+    title: 'Mediatype identifier: application/vnd.scancheckdata+json; view=default'
+    type: object
+  Scandata:
+    description: Scandata media type (default view)
+    example:
+      id: bb7b2304-5847-43bb-ac0f-4a9d6dc95922
+      size: 2.281809422698555e+17
+    properties:
+      id:
+        example: bb7b2304-5847-43bb-ac0f-4a9d6dc95922
+        format: uuid
+        type: string
+      size:
+        description: Number of checks of the scan
+        example: 2.281809422698555e+17
+        format: int64
+        type: integer
+    required:
+    - id
+    - size
+    title: 'Mediatype identifier: application/vnd.scandata+json; view=default'
+    type: object
+  Scans:
+    description: Scans media type (default view)
+    example:
+      scans:
+      - size: 9.124474216245031e+18
+    properties:
+      scans:
+        example:
+        - size: 9.124474216245031e+18
+        items:
+          $ref: '#/definitions/ScanData'
+        type: array
+    required:
+    - scans
+    title: 'Mediatype identifier: application/vnd.scans+json; view=default'
+    type: object
+  Stat:
+    description: Stat media type (default view)
+    example:
+      status: Perferendis eos et.
+      total: 7.217549870880052e+18
+    properties:
+      status:
+        example: Perferendis eos et.
+        type: string
+      total:
+        example: 7.217549870880052e+18
+        format: int64
+        type: integer
+    required:
+    - status
+    - total
+    title: 'Mediatype identifier: application/vnd.stat+json; view=default'
+    type: object
+  Stats:
+    description: Stats media type (default view)
+    example:
+      checks:
+      - status: Perferendis eos et.
+        total: 7.217549870880052e+18
+      - status: Perferendis eos et.
+        total: 7.217549870880052e+18
+      - status: Perferendis eos et.
+        total: 7.217549870880052e+18
+    properties:
+      checks:
+        example:
+        - status: Perferendis eos et.
+          total: 7.217549870880052e+18
+        - status: Perferendis eos et.
+          total: 7.217549870880052e+18
+        - status: Perferendis eos et.
+          total: 7.217549870880052e+18
+        items:
+          $ref: '#/definitions/Stat'
+        type: array
+    required:
+    - checks
+    title: 'Mediatype identifier: application/vnd.stats+json; view=default'
+    type: object
+  error:
+    description: Error response media type (default view)
+    example:
+      code: invalid_value
+      detail: Value of ID must be an integer
+      id: 3F1FKVRR
+      meta:
+        timestamp: 1.458609066e+09
+      status: "400"
+    properties:
+      code:
+        description: an application-specific error code, expressed as a string value.
+        example: invalid_value
+        type: string
+      detail:
+        description: a human-readable explanation specific to this occurrence of the
+          problem.
+        example: Value of ID must be an integer
+        type: string
+      id:
+        description: a unique identifier for this particular occurrence of the problem.
+        example: 3F1FKVRR
+        type: string
+      meta:
+        additionalProperties: true
+        description: a meta object containing non-standard meta-information about
+          the error.
+        example:
+          timestamp: 1.458609066e+09
+        type: object
+      status:
+        description: the HTTP status code applicable to this problem, expressed as
+          a string value.
+        example: "400"
+        type: string
+    title: 'Mediatype identifier: application/vnd.goa.error; view=default'
+    type: object
+host: localhost:3000
+info:
+  description: Vulnerability Scanning Framework API
+  title: Vulcan Persistence
+  version: "1.0"
+paths:
+  /v1/agents:
+    get:
+      description: Get all agents
+      operationId: Agents#index
+      parameters:
+      - in: query
+        name: status
+        required: false
+        type: string
+      produces:
+      - application/vnd.agents+json
+      - application/vnd.goa.error
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Agents'
+        "400":
+          description: Bad Request
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/error'
+      schemes:
+      - http
+      summary: index Agents
+      tags:
+      - Agents
+  /v1/agents/{id}:
+    get:
+      description: Get an Agent by its ID
+      operationId: Agents#show
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/vnd.agent+json
+      - application/vnd.goa.error
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Agent'
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/error'
+      schemes:
+      - http
+      summary: show Agents
+      tags:
+      - Agents
+  /v1/agents/{id}/pause:
+    post:
+      description: Pause an agent
+      operationId: Agents#pause
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/vnd.goa.error
+      - text/plain
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/error'
+      schemes:
+      - http
+      summary: pause Agents
+      tags:
+      - Agents
+  /v1/assettypes:
+    get:
+      description: Get all assettypes and per each one the checktypes that are accepting
+        that concrete assettype
+      operationId: Assettypes#index
+      produces:
+      - application/vnd.assettype+json; type=collection
+      - application/vnd.goa.error
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/AssettypeCollection'
+        "400":
+          description: Bad Request
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/error'
+      schemes:
+      - http
+      summary: index Assettypes
+      tags:
+      - Assettypes
+  /v1/checks/:
+    post:
+      description: Create a new Check
+      operationId: Checks#create
+      parameters:
+      - in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/CheckPayload'
+      produces:
+      - application/vnd.check+json
+      - application/vnd.goa.error
+      responses:
+        "201":
+          description: Resource created
+          schema:
+            $ref: '#/definitions/Check'
+        "400":
+          description: Bad Request
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/error'
+      schemes:
+      - http
+      summary: create Checks
+      tags:
+      - Checks
+  /v1/checks/{id}:
+    get:
+      description: Get a Check by its ID
+      operationId: Checks#show
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/vnd.check+json
+      - application/vnd.goa.error
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Check'
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/error'
+      schemes:
+      - http
+      summary: show Checks
+      tags:
+      - Checks
+  /v1/checks/{id}/abort:
+    post:
+      description: Abort a Check gracefully
+      operationId: Checks#abort
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/vnd.goa.error
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/error'
+      schemes:
+      - http
+      summary: abort Checks
+      tags:
+      - Checks
+  /v1/checks/{id}/kill:
+    post:
+      description: Kill a Check immediately
+      operationId: Checks#kill
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/vnd.goa.error
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/error'
+      schemes:
+      - http
+      summary: kill Checks
+      tags:
+      - Checks
+  /v1/checktypes:
+    get:
+      description: Get all checktypes
+      operationId: Checktypes#index
+      parameters:
+      - default: "true"
+        in: query
+        name: enabled
+        required: false
+        type: string
+      produces:
+      - application/vnd.checktypes+json
+      - application/vnd.goa.error
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Checktypes'
+        "400":
+          description: Bad Request
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/error'
+      schemes:
+      - http
+      summary: index Checktypes
+      tags:
+      - Checktypes
+  /v1/checktypes/{id}:
+    get:
+      description: Get a Checktype by its ID
+      operationId: Checktypes#show
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/vnd.checktype+json
+      - application/vnd.goa.error
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Checktype'
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/error'
+      schemes:
+      - http
+      summary: show Checktypes
+      tags:
+      - Checktypes
+  /v1/filescan/:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Create a scan by uploading a file using a multipart form with the
+        scan definition
+      operationId: FileScans#upload
+      parameters:
+      - description: Upload
+        in: formData
+        name: upload
+        required: true
+        type: file
+      produces:
+      - application/vnd.goa.error
+      - application/vnd.scandata+json
+      responses:
+        "201":
+          description: Resource created
+          schema:
+            $ref: '#/definitions/Scandata'
+        "400":
+          description: Bad Request
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/error'
+      schemes:
+      - http
+      summary: upload FileScans
+      tags:
+      - FileScans
+  /v1/healthcheck/:
+    get:
+      description: Get the health status for the application
+      operationId: healthcheck#show
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: OK
+      schemes:
+      - http
+      summary: show healthcheck
+      tags:
+      - healthcheck
+  /v1/scans:
+    get:
+      description: Get all scans
+      operationId: Scans#index
+      produces:
+      - application/vnd.goa.error
+      - application/vnd.scans+json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Scans'
+        "400":
+          description: Bad Request
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/error'
+      schemes:
+      - http
+      summary: index Scans
+      tags:
+      - Scans
+  /v1/scans/:
+    post:
+      description: Create a new Scan
+      operationId: Scans#create
+      parameters:
+      - in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/ScanPayload'
+      produces:
+      - application/vnd.check+json
+      - application/vnd.goa.error
+      responses:
+        "201":
+          description: Resource created
+          schema:
+            $ref: '#/definitions/Check'
+        "400":
+          description: Bad Request
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/error'
+      schemes:
+      - http
+      summary: create Scans
+      tags:
+      - Scans
+  /v1/scans/{id}:
+    get:
+      description: Get a Scan by its ID
+      operationId: Scans#show
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/vnd.goa.error
+      - application/vnd.scan+json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Scan'
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/error'
+      schemes:
+      - http
+      summary: show Scans
+      tags:
+      - Scans
+  /v1/scans/{id}/abort:
+    post:
+      description: Abort a scan
+      operationId: Scans#abort
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/vnd.goa.error
+      - text/plain
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/error'
+      schemes:
+      - http
+      summary: abort Scans
+      tags:
+      - Scans
+  /v1/scans/{id}/checks:
+    get:
+      description: Get checks of the Scan
+      operationId: Scans#checks
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/vnd.checks+json
+      - application/vnd.goa.error
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Checks'
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/error'
+      schemes:
+      - http
+      summary: checks Scans
+      tags:
+      - Scans
+  /v1/scans/{id}/stats:
+    get:
+      description: Get stats of the Scan
+      operationId: Scans#stats
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/vnd.goa.error
+      - application/vnd.stats+json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Stats'
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/error'
+      schemes:
+      - http
+      summary: stats Scans
+      tags:
+      - Scans
+  /v1/swagger.json:
+    get:
+      operationId: swagger#/v1/swagger.json
+      responses:
+        "200":
+          description: File downloaded
+          schema:
+            type: file
+      schemes:
+      - http
+      summary: Download ./_resources/swagger/swagger.json
+produces:
+- application/json
+- application/xml
+- application/gob
+- application/x-gob
+responses:
+  BadRequest:
+    description: Bad Request
+  Created:
+    description: Resource created
+    schema:
+      $ref: '#/definitions/Check'
+  InternalServerError:
+    description: Server error
+    schema:
+      $ref: '#/definitions/error'
+  NoContent:
+    description: No Content
+  NotFound:
+    description: Not Found
+  OK:
+    description: OK
+schemes:
+- http
+swagger: "2.0"
