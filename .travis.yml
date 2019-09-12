@@ -1,0 +1,14 @@
+dist: trusty
+language: go
+go:
+- 1.8
+env:
+  global:
+  - CGO_ENABLED=0
+gobuild_args: "-a -tags netgo -ldflags '-w'"
+go_import_path: github.com/adevinta/vulcan-core-cli
+script:
+  - go get -u github.com/golang/dep/cmd/dep
+  - dep ensure -v
+  - go run ./vulcan-core/gen/main.go # Just for testing the versions of the dependencies specified in Gopkg.toml are okey.
+  - go test -v -cover ./...
