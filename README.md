@@ -146,5 +146,6 @@ The current client can be imported in go with this import path:
 To generate the client the and swagger definition from the goa design files execute:
 ```
 cd vulcan-core
-source clean.sh
+source clear.sh
+source build.sh
 ```
