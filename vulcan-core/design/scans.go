@@ -112,18 +112,17 @@ var ScanChecksPayload = Type("ScanChecksPayload", func() {
 // but we had to change it because Gorma was not correctly generating some
 // function calls. We should investigate more about it.
 var ScanMediaData = MediaType("application/vnd.scandata+json", func() {
-	Reference(ScanData)
-
 	Attributes(func() {
 		Attribute("id", UUID)
-		Attribute("size")
+		Attribute("size", Integer)
 		Attribute("created_at", DateTime)
 		Required("id", "size", "created_at")
 	})
 
 	View("default", func() {
 		Attribute("id")
-		Attribute("size")
+		Attribute("size", Integer)
+		Attribute("created_at", DateTime)
 	})
 })
 
@@ -132,7 +131,7 @@ var ScanMediaData = MediaType("application/vnd.scandata+json", func() {
 // function calls. We should investigate more about it.
 var ScanMedia = MediaType("application/vnd.scan+json", func() {
 	Attributes(func() {
-		Attribute("scan", "application/vnd.scandata+json")
+		Attribute("scan", ScanMediaData)
 		Required("scan")
 	})
 
