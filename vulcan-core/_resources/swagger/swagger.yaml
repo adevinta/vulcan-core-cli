@@ -7,13 +7,13 @@ definitions:
       agent:
         enabled: false
         heartbet_at: "2004-08-23T19:32:20Z"
-        id: 9c868d5d-ecc5-4965-bf92-3b45bcd84982
+        id: c58880ef-2f66-4a9e-b070-36d31cfaeac9
         jobqueue:
           jobqueue:
             arn: Mollitia cupiditate molestiae saepe quis ducimus.
             description: Ex totam.
             enabled: false
-            id: 9b1b2f67-2308-4f1f-ac8d-5265a5deb9d8
+            id: 08d3d295-dbea-4a2f-94dd-4a2fead45ac4
         status: RUNNING
         version: Eos cumque ab.
     properties:
@@ -25,11 +25,11 @@ definitions:
     type: object
   AgentData:
     example:
-      id: 44d39037-f5bc-4610-ba6d-60e547727996
+      id: e9f7a93f-1453-41b2-97b3-e3fc17aed0bb
       status: RUNNING
     properties:
       id:
-        example: 44d39037-f5bc-4610-ba6d-60e547727996
+        example: e9f7a93f-1453-41b2-97b3-e3fc17aed0bb
         format: uuid
         type: string
       status:
@@ -47,13 +47,13 @@ definitions:
     example:
       enabled: false
       heartbet_at: "2004-08-23T19:32:20Z"
-      id: 9c868d5d-ecc5-4965-bf92-3b45bcd84982
+      id: c58880ef-2f66-4a9e-b070-36d31cfaeac9
       jobqueue:
         jobqueue:
           arn: Mollitia cupiditate molestiae saepe quis ducimus.
           description: Ex totam.
           enabled: false
-          id: 9b1b2f67-2308-4f1f-ac8d-5265a5deb9d8
+          id: 08d3d295-dbea-4a2f-94dd-4a2fead45ac4
       status: RUNNING
       version: Eos cumque ab.
     properties:
@@ -65,7 +65,7 @@ definitions:
         format: date-time
         type: string
       id:
-        example: 9c868d5d-ecc5-4965-bf92-3b45bcd84982
+        example: c58880ef-2f66-4a9e-b070-36d31cfaeac9
         format: uuid
         type: string
       jobqueue:
@@ -93,7 +93,7 @@ definitions:
       arn: Mollitia cupiditate molestiae saepe quis ducimus.
       description: Ex totam.
       enabled: false
-      id: 9b1b2f67-2308-4f1f-ac8d-5265a5deb9d8
+      id: 08d3d295-dbea-4a2f-94dd-4a2fead45ac4
     properties:
       arn:
         example: Mollitia cupiditate molestiae saepe quis ducimus.
@@ -105,7 +105,7 @@ definitions:
         example: false
         type: boolean
       id:
-        example: 9b1b2f67-2308-4f1f-ac8d-5265a5deb9d8
+        example: 08d3d295-dbea-4a2f-94dd-4a2fead45ac4
         format: uuid
         type: string
     required:
@@ -119,20 +119,20 @@ definitions:
     description: Agents media type (default view)
     example:
       agents:
-      - id: 44d39037-f5bc-4610-ba6d-60e547727996
+      - id: e9f7a93f-1453-41b2-97b3-e3fc17aed0bb
         status: RUNNING
-      - id: 44d39037-f5bc-4610-ba6d-60e547727996
+      - id: e9f7a93f-1453-41b2-97b3-e3fc17aed0bb
         status: RUNNING
-      - id: 44d39037-f5bc-4610-ba6d-60e547727996
+      - id: e9f7a93f-1453-41b2-97b3-e3fc17aed0bb
         status: RUNNING
     properties:
       agents:
         example:
-        - id: 44d39037-f5bc-4610-ba6d-60e547727996
+        - id: e9f7a93f-1453-41b2-97b3-e3fc17aed0bb
           status: RUNNING
-        - id: 44d39037-f5bc-4610-ba6d-60e547727996
+        - id: e9f7a93f-1453-41b2-97b3-e3fc17aed0bb
           status: RUNNING
-        - id: 44d39037-f5bc-4610-ba6d-60e547727996
+        - id: e9f7a93f-1453-41b2-97b3-e3fc17aed0bb
           status: RUNNING
         items:
           $ref: '#/definitions/AgentData'
@@ -167,12 +167,6 @@ definitions:
     - assettype: DomainName
       name:
       - Deserunt itaque.
-    - assettype: DomainName
-      name:
-      - Deserunt itaque.
-    - assettype: DomainName
-      name:
-      - Deserunt itaque.
     items:
       $ref: '#/definitions/Assettype'
     title: 'Mediatype identifier: application/vnd.assettype+json; type=collection;
@@ -185,20 +179,21 @@ definitions:
         checktype:
           description: r690263xo9
           enabled: false
-          id: 4498e479-ec54-4428-82e4-c3e58ae92353
+          id: 0b671ba5-6f9f-4f4a-87ae-29429d8b5e38
           image: Porro omnis.
           name: nmap
           options: Dolores qui sit quia eaque consequatur.
           timeout: 1610291829728129233
-        id: 872c1e5e-5f22-4073-8482-488134360578
+        id: c5797f49-21e8-422b-8c31-21f1688fb7f1
         options: '{ "policy" : "fullscan" }'
         progress: 0.6709447722201115
         raw: Rerum facilis doloremque nisi aut vitae distinctio.
         report: Sunt laudantium porro est.
         scan:
-          id: a433d00a-13d4-4f8d-b52a-5e5998a13b4b
-          size: 228180942269855484
-        status: Nulla et autem.
+          created_at: "1979-07-29T10:51:24Z"
+          id: c41fa3a4-5e3f-4619-a22e-8e2c0d1a9286
+          size: 8988686510645284907
+        status: Et autem repudiandae non cupiditate.
         target: www.example.com
         webhook: https://webhook.example.com/callback
     properties:
@@ -210,8 +205,8 @@ definitions:
     type: object
   CheckData:
     example:
-      checktype_name: Atque ad sint occaecati omnis et.
-      jobqueue_id: c38318c7-4f55-4d6a-aa55-6c421a91dae5
+      checktype_name: Occaecati omnis.
+      jobqueue_id: 5b780ba3-b06b-4f01-8d67-91714016bba6
       options: '{ "policy" : "fullscan" }'
       tag: sdrn
       target: www.example.com
@@ -219,12 +214,12 @@ definitions:
     properties:
       checktype_name:
         description: Name of the checktype this check is
-        example: Atque ad sint occaecati omnis et.
+        example: Occaecati omnis.
         type: string
       jobqueue_id:
         description: "ID of the specific queue this check must we enqueued.\n\t\tThe
           queue must already be created in vulcan core."
-        example: c38318c7-4f55-4d6a-aa55-6c421a91dae5
+        example: 5b780ba3-b06b-4f01-8d67-91714016bba6
         format: uuid
         type: string
       options:
@@ -257,8 +252,8 @@ definitions:
   CheckPayload:
     example:
       check:
-        checktype_name: Atque ad sint occaecati omnis et.
-        jobqueue_id: c38318c7-4f55-4d6a-aa55-6c421a91dae5
+        checktype_name: Occaecati omnis.
+        jobqueue_id: 5b780ba3-b06b-4f01-8d67-91714016bba6
         options: '{ "policy" : "fullscan" }'
         tag: sdrn
         target: www.example.com
@@ -276,20 +271,21 @@ definitions:
       checktype:
         description: r690263xo9
         enabled: false
-        id: 4498e479-ec54-4428-82e4-c3e58ae92353
+        id: 0b671ba5-6f9f-4f4a-87ae-29429d8b5e38
         image: Porro omnis.
         name: nmap
         options: Dolores qui sit quia eaque consequatur.
         timeout: 1610291829728129233
-      id: 872c1e5e-5f22-4073-8482-488134360578
+      id: c5797f49-21e8-422b-8c31-21f1688fb7f1
       options: '{ "policy" : "fullscan" }'
       progress: 0.6709447722201115
       raw: Rerum facilis doloremque nisi aut vitae distinctio.
       report: Sunt laudantium porro est.
       scan:
-        id: a433d00a-13d4-4f8d-b52a-5e5998a13b4b
-        size: 228180942269855484
-      status: Nulla et autem.
+        created_at: "1979-07-29T10:51:24Z"
+        id: c41fa3a4-5e3f-4619-a22e-8e2c0d1a9286
+        size: 8988686510645284907
+      status: Et autem repudiandae non cupiditate.
       target: www.example.com
       webhook: https://webhook.example.com/callback
     properties:
@@ -318,7 +314,7 @@ definitions:
       scan:
         $ref: '#/definitions/Scandata'
       status:
-        example: Nulla et autem.
+        example: Et autem repudiandae non cupiditate.
         type: string
       target:
         description: Target to be scanned. Can be a domain, hostname, IP or URL
@@ -534,11 +530,11 @@ definitions:
     type: object
   ScanData:
     example:
-      size: 9124474216245030666
+      size: 3503517418557384586
     properties:
       size:
         description: Number of checks of the scan
-        example: 9124474216245030666
+        example: 3503517418557384586
         format: int64
         type: integer
     required:
@@ -578,14 +574,14 @@ definitions:
     properties:
       checktype_name:
         description: Name of the checktype this check is
-        example: Molestias molestiae.
+        example: Possimus aut officiis illum.
         type: string
       id:
         example: 681fecc5-af7d-4d54-852f-80a752cf8420
         format: uuid
         type: string
       status:
-        example: Possimus aut officiis illum.
+        example: Quisquam dolor voluptas.
         type: string
       target:
         description: Target to be scanned. Can be a domain, hostname, IP or URL
@@ -606,29 +602,33 @@ definitions:
       id: a433d00a-13d4-4f8d-b52a-5e5998a13b4b
       size: 228180942269855484
     properties:
+      created_at:
+        example: "1979-07-29T10:51:24Z"
+        format: date-time
+        type: string
       id:
         example: a433d00a-13d4-4f8d-b52a-5e5998a13b4b
         format: uuid
         type: string
       size:
-        description: Number of checks of the scan
-        example: 228180942269855484
+        example: 8988686510645284907
         format: int64
         type: integer
     required:
     - id
     - size
+    - created_at
     title: 'Mediatype identifier: application/vnd.scandata+json; view=default'
     type: object
   Scans:
     description: Scans media type (default view)
     example:
       scans:
-      - size: 9124474216245030666
+      - size: 3503517418557384586
     properties:
       scans:
         example:
-        - size: 9124474216245030666
+        - size: 3503517418557384586
         items:
           $ref: '#/definitions/ScanData'
         type: array
@@ -639,14 +639,14 @@ definitions:
   Stat:
     description: Stat media type (default view)
     example:
-      status: Perferendis eos et.
-      total: 7217549870880052735
+      status: Eos et culpa error eveniet.
+      total: 3564146057956105435
     properties:
       status:
-        example: Perferendis eos et.
+        example: Eos et culpa error eveniet.
         type: string
       total:
-        example: 7217549870880052735
+        example: 3564146057956105435
         format: int64
         type: integer
     required:
@@ -658,21 +658,13 @@ definitions:
     description: Stats media type (default view)
     example:
       checks:
-      - status: Perferendis eos et.
-        total: 7217549870880052735
-      - status: Perferendis eos et.
-        total: 7217549870880052735
-      - status: Perferendis eos et.
-        total: 7217549870880052735
+      - status: Eos et culpa error eveniet.
+        total: 3564146057956105435
     properties:
       checks:
         example:
-        - status: Perferendis eos et.
-          total: 7217549870880052735
-        - status: Perferendis eos et.
-          total: 7217549870880052735
-        - status: Perferendis eos et.
-          total: 7217549870880052735
+        - status: Eos et culpa error eveniet.
+          total: 3564146057956105435
         items:
           $ref: '#/definitions/Stat'
         type: array
