@@ -13,13 +13,6 @@ import (
 	report "github.com/adevinta/vulcan-report"
 )
 
-var (
-
-	// ErrUnexpectedStatus is returned when a call to the vulcan core api is
-	// made and the returned http status does not match the expected one.
-	ErrUnexpectedStatus = errors.New("unexpected response status")
-)
-
 // ErrorUnexpectedStatus is returned when one of calls made by the concurrent
 // client to one endpoint of vulcan core returns an unexpected http status.
 type ErrorUnexpectedStatus struct {
@@ -31,26 +24,45 @@ func (e *ErrorUnexpectedStatus) Error() string {
 	return fmt.Sprintf("unexpected http status, expected %d, got %d", e.Expected, e.Got)
 }
 
-// ScanData define the data of a scan retrieved by the scans client.
-type ScanData struct {
-	Date    string
-	Reports []report.Report
+var (
+	// ErrCheckNotFinished is returned by the client when a check of a scan does
+	// not have report because is not FINISHED.
+	ErrCheckNotFinished = errors.New("Check status is not FINISHED")
+)
+
+// CheckData contains the info regarding a check of a scan.
+type CheckData struct {
+	coreclient.Scancheckdata
+	Report ReportData
 }
 
-// ReportClient defines the services needed by the concurrent client.
-type ReportClient interface {
+// ReportData contanis either the info regarding the report of a check or the error
+// that the client got trying to dowload it.
+type ReportData struct {
+	Err error
+	report.Report
+}
+
+// ScanData define the data of a scan retrieved by the scans client.
+type ScanData struct {
+	CreationDate string
+	ChecksData   map[string]CheckData
+}
+
+// CheckReportClient defines the services needed by the concurrent client.
+type CheckReportClient interface {
 	GetReport(date, scanID, checkID string) (*report.Report, error)
 }
 
 // Client allows to get the reports of a scan concurrently.
 type Client struct {
 	coreC   *coreclient.Client
-	report  ReportClient
+	report  CheckReportClient
 	workers int
 }
 
 // NewClient returns a new client scans client.
-func NewClient(coreClient *coreclient.Client, reportClient ReportClient, workers int) *Client {
+func NewClient(coreClient *coreclient.Client, reportClient CheckReportClient, workers int) *Client {
 	return &Client{coreClient, reportClient, workers}
 }
 
@@ -106,48 +118,63 @@ func (c *Client) Data(ctx context.Context, ID string) (ScanData, error) {
 		defer wg.Done()
 	LOOP:
 		for _, c := range checksData.Checks {
+			c := c
 			select {
 			case <-ctx.Done():
 				break LOOP
 			default:
-				checks <- check{ID: c.ID.String(), ScanID: ID, Date: scanDate}
+				if c == nil {
+					// Skip the a nil check.
+					continue
+				}
+				checks <- check{*c, ID, scanDate}
 			}
 		}
 		close(checks)
 	}()
 
 	// Spawn the workers.
-	wg.Add(1)
-	go func() {
-		cctx, _ := context.WithCancel(ctx)
-		defer wg.Done()
-		downloadCheckReport(wg, cctx.Done(), checks, rs, c.report)
-	}()
+	for i := 0; i < c.workers; i++ {
+		wg.Add(1)
+		go func() {
+			cctx, _ := context.WithCancel(ctx)
+			defer wg.Done()
+			downloadCheckReport(cctx.Done(), checks, rs, c.report)
+		}()
+	}
 	wg.Wait()
 	if ctx.Err() != nil {
 		// The download process has been canceled.
 		return ScanData{}, ctx.Err()
 	}
-	var result []report.Report
+	var results = make(map[string]CheckData)
 	for _, r := range rs.reports {
-		if r.err != nil {
-			return ScanData{}, r.err
+		cid := r.CheckData.ID.String()
+		// We add the check data in any case.
+		data := CheckData{Scancheckdata: r.CheckData}
+		// If we got an error downloading a report we store that error.
+		if r.Err != nil {
+			data.Report.Err = r.Err
+		} else {
+			// In this case the report of the check cannot be nil.
+			if r.R == nil {
+				return ScanData{}, errors.New("unexpected nil downloading check report")
+			}
+			data.Report.Report = *r.R
 		}
-		if r.R == nil {
-			return ScanData{}, errors.New("unexpected nil downloading check report")
-		}
-		result = append(result, *r.R)
+		results[cid] = data
 	}
 	data := ScanData{
-		Date:    scanDate,
-		Reports: result,
+		CreationDate: scanDate,
+		ChecksData:   results,
 	}
 	return data, nil
 }
 
 type reportResult struct {
-	R   *report.Report
-	err error
+	CheckData coreclient.Scancheckdata
+	R         *report.Report
+	Err       error
 }
 
 type reportResults struct {
@@ -162,23 +189,30 @@ func (r *reportResults) Add(result reportResult) {
 }
 
 type check struct {
-	ID     string
-	ScanID string
-	Date   string
+	Check    coreclient.Scancheckdata
+	ScanID   string
+	ScanDate string
 }
 
-func downloadCheckReport(wg *sync.WaitGroup, done <-chan struct{}, checks <-chan check, results *reportResults, rclient ReportClient) {
+func downloadCheckReport(done <-chan struct{}, checks <-chan check, results *reportResults, rclient CheckReportClient) {
 LOOP:
 	for c := range checks {
 		select {
 		case <-done:
 			break LOOP
 		default:
-			report, err := rclient.GetReport(c.Date, c.ScanID, c.ID)
-			if err != nil {
-				err = fmt.Errorf("getting results for check-id: %s, %w", c.ID, err)
+			checkID := c.Check.ID.String()
+			if c.Check.Status != "FINISHED" {
+				err := fmt.Errorf("%w, check status %s", ErrCheckNotFinished, c.Check.Status)
+				r := reportResult{c.Check, nil, err}
+				results.Add(r)
+				continue
 			}
-			r := reportResult{report, err}
+			report, err := rclient.GetReport(c.ScanDate, c.ScanID, checkID)
+			if err != nil {
+				err = fmt.Errorf("getting results for check-id: %s, %w", checkID, err)
+			}
+			r := reportResult{c.Check, report, err}
 			results.Add(r)
 		}
 	}
