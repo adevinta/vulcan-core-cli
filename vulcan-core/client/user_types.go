@@ -401,6 +401,10 @@ func (ut *ChecktypeType) Validate() (err error) {
 
 // fileScanPayload user type.
 type fileScanPayload struct {
+	// Program ID
+	ProgramID *string `form:"program_id,omitempty" json:"program_id,omitempty" yaml:"program_id,omitempty" xml:"program_id,omitempty"`
+	// Tag associated with the scan
+	Tag *string `form:"tag,omitempty" json:"tag,omitempty" yaml:"tag,omitempty" xml:"tag,omitempty"`
 	// Upload
 	Upload *string `form:"upload,omitempty" json:"upload,omitempty" yaml:"upload,omitempty" xml:"upload,omitempty"`
 }
@@ -416,6 +420,12 @@ func (ut *fileScanPayload) Validate() (err error) {
 // Publicize creates FileScanPayload from fileScanPayload
 func (ut *fileScanPayload) Publicize() *FileScanPayload {
 	var pub FileScanPayload
+	if ut.ProgramID != nil {
+		pub.ProgramID = ut.ProgramID
+	}
+	if ut.Tag != nil {
+		pub.Tag = ut.Tag
+	}
 	if ut.Upload != nil {
 		pub.Upload = *ut.Upload
 	}
@@ -424,6 +434,10 @@ func (ut *fileScanPayload) Publicize() *FileScanPayload {
 
 // FileScanPayload user type.
 type FileScanPayload struct {
+	// Program ID
+	ProgramID *string `form:"program_id,omitempty" json:"program_id,omitempty" yaml:"program_id,omitempty" xml:"program_id,omitempty"`
+	// Tag associated with the scan
+	Tag *string `form:"tag,omitempty" json:"tag,omitempty" yaml:"tag,omitempty" xml:"tag,omitempty"`
 	// Upload
 	Upload string `form:"upload" json:"upload" yaml:"upload" xml:"upload"`
 }

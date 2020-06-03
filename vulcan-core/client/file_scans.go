@@ -40,6 +40,28 @@ func (c *Client) NewUploadFileScansRequest(ctx context.Context, path string, pay
 	w := multipart.NewWriter(&body)
 
 	{
+		fw, err := w.CreateFormField("program_id")
+		if err != nil {
+			return nil, err
+		}
+		tmp_ProgramID := *payload.ProgramID
+		s := tmp_ProgramID
+		if _, err := fw.Write([]byte(s)); err != nil {
+			return nil, err
+		}
+	}
+	{
+		fw, err := w.CreateFormField("tag")
+		if err != nil {
+			return nil, err
+		}
+		tmp_Tag := *payload.Tag
+		s := tmp_Tag
+		if _, err := fw.Write([]byte(s)); err != nil {
+			return nil, err
+		}
+	}
+	{
 		_, file := filepath.Split(payload.Upload)
 		fw, err := w.CreateFormFile("upload", file)
 		if err != nil {
