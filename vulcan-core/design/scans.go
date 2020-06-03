@@ -89,6 +89,8 @@ var _ = Resource("FileScans", func() {
 
 var FileScanPayload = Type("FileScanPayload", func() {
 	Attribute("upload", File, "Upload")
+	Attribute("tag", String, "Tag associated with the scan")
+	Attribute("program_id", String, "Program ID")
 	Required("upload")
 })
 

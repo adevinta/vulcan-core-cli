@@ -194,7 +194,7 @@ Payload example:
 {
    "check": {
       "checktype_name": "Occaecati omnis.",
-      "jobqueue_id": "5b780ba3-b06b-4f01-8d67-91714016bba6",
+      "jobqueue_id": "8dff9567-69ac-4102-bf60-5223c54f16b1",
       "options": "{ \"policy\" : \"fullscan\" }",
       "tag": "sdrn",
       "target": "www.example.com",
@@ -220,7 +220,27 @@ Payload example:
          {
             "check": {
                "checktype_name": "Occaecati omnis.",
-               "jobqueue_id": "5b780ba3-b06b-4f01-8d67-91714016bba6",
+               "jobqueue_id": "8dff9567-69ac-4102-bf60-5223c54f16b1",
+               "options": "{ \"policy\" : \"fullscan\" }",
+               "tag": "sdrn",
+               "target": "www.example.com",
+               "webhook": "https://webhook.example.com/callback"
+            }
+         },
+         {
+            "check": {
+               "checktype_name": "Occaecati omnis.",
+               "jobqueue_id": "8dff9567-69ac-4102-bf60-5223c54f16b1",
+               "options": "{ \"policy\" : \"fullscan\" }",
+               "tag": "sdrn",
+               "target": "www.example.com",
+               "webhook": "https://webhook.example.com/callback"
+            }
+         },
+         {
+            "check": {
+               "checktype_name": "Occaecati omnis.",
+               "jobqueue_id": "8dff9567-69ac-4102-bf60-5223c54f16b1",
                "options": "{ \"policy\" : \"fullscan\" }",
                "tag": "sdrn",
                "target": "www.example.com",
@@ -382,7 +402,9 @@ Payload example:
 Payload example:
 
 {
-   "upload": "Sunt ab dolor.jpg"
+   "program_id": "Sunt ab dolor voluptates.",
+   "tag": "Ut libero quidem omnis et.",
+   "upload": "Maxime eos ut officiis.jpg"
 }`,
 		RunE: func(cmd *cobra.Command, args []string) error { return tmp18.Run(c, args) },
 	}
