@@ -1,13 +1,10 @@
-dist: trusty
 language: go
 go:
-  - "1.13.3"
+  - 1.15
 env:
   global:
     - CGO_ENABLED=0
 gobuild_args: "-a -tags netgo -ldflags '-w'"
 go_import_path: github.com/adevinta/vulcan-core-cli
-install:
-  - echo "skip install"
-script:
-  - go run ./vulcan-core/gen/main.go # Just for testing the versions of the dependencies specified are okey.
+install: _script/bootstrap
+script: _script/cibuild

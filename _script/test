@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+go run ./vulcan-core/gen/main.go # Just for testing the versions of the dependencies specified are okey.
+
+go test -v -short -cover ./...
