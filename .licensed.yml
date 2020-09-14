@@ -1,0 +1,17 @@
+source_path: "{.*,**/*}"
+shared_cache: true
+ignored:
+  go:
+    - github.mpi-internal.com/**/*
+allowed:
+  - mit
+  - apache-2.0
+  - bsd-2-clause
+  - bsd-3-clause
+reviewed:
+  go:
+    - go.golang.org/x/net/websocket
+    - golang.org/x/net/websocket
+    - golang.org/x/tools/go/ast/astutil
+    - github.com/dimfeld/httppath
+    - gopkg.in/yaml.v2
