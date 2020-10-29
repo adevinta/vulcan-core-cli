@@ -99,6 +99,8 @@ type AssettypeType struct {
 
 // checkData user type.
 type checkData struct {
+	// Asset type of the target. Can be a DomainName, Hostname, etc.
+	Assettype *string `form:"assettype,omitempty" json:"assettype,omitempty" yaml:"assettype,omitempty" xml:"assettype,omitempty"`
 	// Name of the checktype this check is
 	ChecktypeName *string `form:"checktype_name,omitempty" json:"checktype_name,omitempty" yaml:"checktype_name,omitempty" xml:"checktype_name,omitempty"`
 	// ID of the specific queue this check must we enqueued.
@@ -118,6 +120,16 @@ type checkData struct {
 func (ut *checkData) Validate() (err error) {
 	if ut.Target == nil {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`request`, "target"))
+	}
+	if ut.Assettype != nil {
+		if ok := goa.ValidatePattern(`^[[:print:]]+`, *ut.Assettype); !ok {
+			err = goa.MergeErrors(err, goa.InvalidPatternError(`request.assettype`, *ut.Assettype, `^[[:print:]]+`))
+		}
+	}
+	if ut.Assettype != nil {
+		if utf8.RuneCountInString(*ut.Assettype) < 1 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`request.assettype`, *ut.Assettype, utf8.RuneCountInString(*ut.Assettype), 1, true))
+		}
 	}
 	if ut.Options != nil {
 		if ok := goa.ValidatePattern(`^[[:print:]]+`, *ut.Options); !ok {
@@ -160,6 +172,9 @@ func (ut *checkData) Validate() (err error) {
 // Publicize creates CheckData from checkData
 func (ut *checkData) Publicize() *CheckData {
 	var pub CheckData
+	if ut.Assettype != nil {
+		pub.Assettype = ut.Assettype
+	}
 	if ut.ChecktypeName != nil {
 		pub.ChecktypeName = ut.ChecktypeName
 	}
@@ -183,6 +198,8 @@ func (ut *checkData) Publicize() *CheckData {
 
 // CheckData user type.
 type CheckData struct {
+	// Asset type of the target. Can be a DomainName, Hostname, etc.
+	Assettype *string `form:"assettype,omitempty" json:"assettype,omitempty" yaml:"assettype,omitempty" xml:"assettype,omitempty"`
 	// Name of the checktype this check is
 	ChecktypeName *string `form:"checktype_name,omitempty" json:"checktype_name,omitempty" yaml:"checktype_name,omitempty" xml:"checktype_name,omitempty"`
 	// ID of the specific queue this check must we enqueued.
@@ -202,6 +219,16 @@ type CheckData struct {
 func (ut *CheckData) Validate() (err error) {
 	if ut.Target == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`type`, "target"))
+	}
+	if ut.Assettype != nil {
+		if ok := goa.ValidatePattern(`^[[:print:]]+`, *ut.Assettype); !ok {
+			err = goa.MergeErrors(err, goa.InvalidPatternError(`type.assettype`, *ut.Assettype, `^[[:print:]]+`))
+		}
+	}
+	if ut.Assettype != nil {
+		if utf8.RuneCountInString(*ut.Assettype) < 1 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`type.assettype`, *ut.Assettype, utf8.RuneCountInString(*ut.Assettype), 1, true))
+		}
 	}
 	if ut.Options != nil {
 		if ok := goa.ValidatePattern(`^[[:print:]]+`, *ut.Options); !ok {

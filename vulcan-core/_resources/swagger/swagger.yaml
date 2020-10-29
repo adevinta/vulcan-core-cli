@@ -7,13 +7,13 @@ definitions:
       agent:
         enabled: false
         heartbet_at: "2004-08-23T19:32:20Z"
-        id: c183400c-9f2d-44be-8f58-d00ca88a7322
+        id: e21be748-2a89-4fb9-b2f3-5ab14e5597b6
         jobqueue:
           jobqueue:
             arn: Mollitia cupiditate molestiae saepe quis ducimus.
             description: Ex totam.
             enabled: false
-            id: 27d48ca0-5681-4403-8a05-f3d8e0725993
+            id: a87b1cb1-e2bc-46c0-b2af-95e5dec14588
         status: RUNNING
         version: Eos cumque ab.
     properties:
@@ -25,11 +25,11 @@ definitions:
     type: object
   AgentData:
     example:
-      id: c764667f-ae88-4570-8ec8-01cac4b4e72a
+      id: 3b795199-47c8-4466-8c7b-3f55a97825ef
       status: RUNNING
     properties:
       id:
-        example: c764667f-ae88-4570-8ec8-01cac4b4e72a
+        example: 3b795199-47c8-4466-8c7b-3f55a97825ef
         format: uuid
         type: string
       status:
@@ -47,13 +47,13 @@ definitions:
     example:
       enabled: false
       heartbet_at: "2004-08-23T19:32:20Z"
-      id: c183400c-9f2d-44be-8f58-d00ca88a7322
+      id: e21be748-2a89-4fb9-b2f3-5ab14e5597b6
       jobqueue:
         jobqueue:
           arn: Mollitia cupiditate molestiae saepe quis ducimus.
           description: Ex totam.
           enabled: false
-          id: 27d48ca0-5681-4403-8a05-f3d8e0725993
+          id: a87b1cb1-e2bc-46c0-b2af-95e5dec14588
       status: RUNNING
       version: Eos cumque ab.
     properties:
@@ -65,7 +65,7 @@ definitions:
         format: date-time
         type: string
       id:
-        example: c183400c-9f2d-44be-8f58-d00ca88a7322
+        example: e21be748-2a89-4fb9-b2f3-5ab14e5597b6
         format: uuid
         type: string
       jobqueue:
@@ -93,7 +93,7 @@ definitions:
       arn: Mollitia cupiditate molestiae saepe quis ducimus.
       description: Ex totam.
       enabled: false
-      id: 27d48ca0-5681-4403-8a05-f3d8e0725993
+      id: a87b1cb1-e2bc-46c0-b2af-95e5dec14588
     properties:
       arn:
         example: Mollitia cupiditate molestiae saepe quis ducimus.
@@ -105,7 +105,7 @@ definitions:
         example: false
         type: boolean
       id:
-        example: 27d48ca0-5681-4403-8a05-f3d8e0725993
+        example: a87b1cb1-e2bc-46c0-b2af-95e5dec14588
         format: uuid
         type: string
     required:
@@ -119,20 +119,20 @@ definitions:
     description: Agents media type (default view)
     example:
       agents:
-      - id: c764667f-ae88-4570-8ec8-01cac4b4e72a
+      - id: 3b795199-47c8-4466-8c7b-3f55a97825ef
         status: RUNNING
-      - id: c764667f-ae88-4570-8ec8-01cac4b4e72a
+      - id: 3b795199-47c8-4466-8c7b-3f55a97825ef
         status: RUNNING
-      - id: c764667f-ae88-4570-8ec8-01cac4b4e72a
+      - id: 3b795199-47c8-4466-8c7b-3f55a97825ef
         status: RUNNING
     properties:
       agents:
         example:
-        - id: c764667f-ae88-4570-8ec8-01cac4b4e72a
+        - id: 3b795199-47c8-4466-8c7b-3f55a97825ef
           status: RUNNING
-        - id: c764667f-ae88-4570-8ec8-01cac4b4e72a
+        - id: 3b795199-47c8-4466-8c7b-3f55a97825ef
           status: RUNNING
-        - id: c764667f-ae88-4570-8ec8-01cac4b4e72a
+        - id: 3b795199-47c8-4466-8c7b-3f55a97825ef
           status: RUNNING
         items:
           $ref: '#/definitions/AgentData'
@@ -176,22 +176,23 @@ definitions:
     description: Check media type (default view)
     example:
       check:
+        assettype: Hostname
         checktype:
           description: r690263xo9
           enabled: false
-          id: c1af2718-6f9d-4ae6-a9eb-b8b8026771a6
+          id: 0b4360d2-2432-4906-841e-7b5cc7299fcc
           image: Porro omnis.
           name: nmap
           options: Dolores qui sit quia eaque consequatur.
           timeout: 1610291829728129233
-        id: fbf615e3-68a3-4bf5-a0a0-06f17c1d3ecd
+        id: c997d04c-ee5e-4e60-981b-2d08a8039c90
         options: '{ "policy" : "fullscan" }'
         progress: 0.6709447722201115
         raw: Rerum facilis doloremque nisi aut vitae distinctio.
         report: Sunt laudantium porro est.
         scan:
           created_at: "1979-07-29T10:51:24Z"
-          id: 9c3280d0-a054-424f-8afb-2fc8ef6bca98
+          id: 6080d161-0006-4c92-999d-5025a6b629ef
           size: 8988686510645284907
         status: Et autem repudiandae non cupiditate.
         target: www.example.com
@@ -205,13 +206,20 @@ definitions:
     type: object
   CheckData:
     example:
+      assettype: Hostname
       checktype_name: Occaecati omnis.
-      jobqueue_id: 8dff9567-69ac-4102-bf60-5223c54f16b1
+      jobqueue_id: 4b4611d2-d3c5-4eea-9b9e-42dc70161681
       options: '{ "policy" : "fullscan" }'
       tag: sdrn
       target: www.example.com
       webhook: https://webhook.example.com/callback
     properties:
+      assettype:
+        description: Asset type of the target. Can be a DomainName, Hostname, etc.
+        example: Hostname
+        minLength: 1
+        pattern: ^[[:print:]]+
+        type: string
       checktype_name:
         description: Name of the checktype this check is
         example: Occaecati omnis.
@@ -219,7 +227,7 @@ definitions:
       jobqueue_id:
         description: "ID of the specific queue this check must we enqueued.\n\t\tThe
           queue must already be created in vulcan core."
-        example: 8dff9567-69ac-4102-bf60-5223c54f16b1
+        example: 4b4611d2-d3c5-4eea-9b9e-42dc70161681
         format: uuid
         type: string
       options:
@@ -252,8 +260,9 @@ definitions:
   CheckPayload:
     example:
       check:
+        assettype: Hostname
         checktype_name: Occaecati omnis.
-        jobqueue_id: 8dff9567-69ac-4102-bf60-5223c54f16b1
+        jobqueue_id: 4b4611d2-d3c5-4eea-9b9e-42dc70161681
         options: '{ "policy" : "fullscan" }'
         tag: sdrn
         target: www.example.com
@@ -268,31 +277,38 @@ definitions:
   Checkdata:
     description: Checkdata media type (default view)
     example:
+      assettype: Hostname
       checktype:
         description: r690263xo9
         enabled: false
-        id: c1af2718-6f9d-4ae6-a9eb-b8b8026771a6
+        id: 0b4360d2-2432-4906-841e-7b5cc7299fcc
         image: Porro omnis.
         name: nmap
         options: Dolores qui sit quia eaque consequatur.
         timeout: 1610291829728129233
-      id: fbf615e3-68a3-4bf5-a0a0-06f17c1d3ecd
+      id: c997d04c-ee5e-4e60-981b-2d08a8039c90
       options: '{ "policy" : "fullscan" }'
       progress: 0.6709447722201115
       raw: Rerum facilis doloremque nisi aut vitae distinctio.
       report: Sunt laudantium porro est.
       scan:
         created_at: "1979-07-29T10:51:24Z"
-        id: 9c3280d0-a054-424f-8afb-2fc8ef6bca98
+        id: 6080d161-0006-4c92-999d-5025a6b629ef
         size: 8988686510645284907
       status: Et autem repudiandae non cupiditate.
       target: www.example.com
       webhook: https://webhook.example.com/callback
     properties:
+      assettype:
+        description: Asset type of the target. Can be a DomainName, Hostname, etc.
+        example: Hostname
+        minLength: 1
+        pattern: ^[[:print:]]+
+        type: string
       checktype:
         $ref: '#/definitions/ChecktypeType'
       id:
-        example: fbf615e3-68a3-4bf5-a0a0-06f17c1d3ecd
+        example: c997d04c-ee5e-4e60-981b-2d08a8039c90
         format: uuid
         type: string
       options:
@@ -340,22 +356,22 @@ definitions:
     example:
       checks:
       - checktype_name: Possimus aut officiis illum.
-        id: 38f9faa7-8ca9-48e1-bd1d-c1f99095688e
+        id: de8795ac-478b-4ae6-8f14-98c69d0747e0
         status: Quisquam dolor voluptas.
         target: www.example.com
       - checktype_name: Possimus aut officiis illum.
-        id: 38f9faa7-8ca9-48e1-bd1d-c1f99095688e
+        id: de8795ac-478b-4ae6-8f14-98c69d0747e0
         status: Quisquam dolor voluptas.
         target: www.example.com
     properties:
       checks:
         example:
         - checktype_name: Possimus aut officiis illum.
-          id: 38f9faa7-8ca9-48e1-bd1d-c1f99095688e
+          id: de8795ac-478b-4ae6-8f14-98c69d0747e0
           status: Quisquam dolor voluptas.
           target: www.example.com
         - checktype_name: Possimus aut officiis illum.
-          id: 38f9faa7-8ca9-48e1-bd1d-c1f99095688e
+          id: de8795ac-478b-4ae6-8f14-98c69d0747e0
           status: Quisquam dolor voluptas.
           target: www.example.com
         items:
@@ -371,7 +387,7 @@ definitions:
       checktype:
         description: r690263xo9
         enabled: false
-        id: c1af2718-6f9d-4ae6-a9eb-b8b8026771a6
+        id: 0b4360d2-2432-4906-841e-7b5cc7299fcc
         image: Porro omnis.
         name: nmap
         options: Dolores qui sit quia eaque consequatur.
@@ -387,7 +403,7 @@ definitions:
     example:
       description: r690263xo9
       enabled: false
-      id: c1af2718-6f9d-4ae6-a9eb-b8b8026771a6
+      id: 0b4360d2-2432-4906-841e-7b5cc7299fcc
       image: Porro omnis.
       name: nmap
       options: Dolores qui sit quia eaque consequatur.
@@ -402,7 +418,7 @@ definitions:
         example: false
         type: boolean
       id:
-        example: c1af2718-6f9d-4ae6-a9eb-b8b8026771a6
+        example: 0b4360d2-2432-4906-841e-7b5cc7299fcc
         format: uuid
         type: string
       image:
@@ -437,21 +453,21 @@ definitions:
       checktypes:
       - description: r690263xo9
         enabled: false
-        id: c1af2718-6f9d-4ae6-a9eb-b8b8026771a6
+        id: 0b4360d2-2432-4906-841e-7b5cc7299fcc
         image: Porro omnis.
         name: nmap
         options: Dolores qui sit quia eaque consequatur.
         timeout: 1610291829728129233
       - description: r690263xo9
         enabled: false
-        id: c1af2718-6f9d-4ae6-a9eb-b8b8026771a6
+        id: 0b4360d2-2432-4906-841e-7b5cc7299fcc
         image: Porro omnis.
         name: nmap
         options: Dolores qui sit quia eaque consequatur.
         timeout: 1610291829728129233
       - description: r690263xo9
         enabled: false
-        id: c1af2718-6f9d-4ae6-a9eb-b8b8026771a6
+        id: 0b4360d2-2432-4906-841e-7b5cc7299fcc
         image: Porro omnis.
         name: nmap
         options: Dolores qui sit quia eaque consequatur.
@@ -461,21 +477,21 @@ definitions:
         example:
         - description: r690263xo9
           enabled: false
-          id: c1af2718-6f9d-4ae6-a9eb-b8b8026771a6
+          id: 0b4360d2-2432-4906-841e-7b5cc7299fcc
           image: Porro omnis.
           name: nmap
           options: Dolores qui sit quia eaque consequatur.
           timeout: 1610291829728129233
         - description: r690263xo9
           enabled: false
-          id: c1af2718-6f9d-4ae6-a9eb-b8b8026771a6
+          id: 0b4360d2-2432-4906-841e-7b5cc7299fcc
           image: Porro omnis.
           name: nmap
           options: Dolores qui sit quia eaque consequatur.
           timeout: 1610291829728129233
         - description: r690263xo9
           enabled: false
-          id: c1af2718-6f9d-4ae6-a9eb-b8b8026771a6
+          id: 0b4360d2-2432-4906-841e-7b5cc7299fcc
           image: Porro omnis.
           name: nmap
           options: Dolores qui sit quia eaque consequatur.
@@ -494,7 +510,7 @@ definitions:
         arn: Mollitia cupiditate molestiae saepe quis ducimus.
         description: Ex totam.
         enabled: false
-        id: 27d48ca0-5681-4403-8a05-f3d8e0725993
+        id: a87b1cb1-e2bc-46c0-b2af-95e5dec14588
     properties:
       jobqueue:
         $ref: '#/definitions/Agentjobqueuedata'
@@ -507,7 +523,7 @@ definitions:
     example:
       scan:
         created_at: "1979-07-29T10:51:24Z"
-        id: 9c3280d0-a054-424f-8afb-2fc8ef6bca98
+        id: 6080d161-0006-4c92-999d-5025a6b629ef
         size: 8988686510645284907
     properties:
       scan:
@@ -520,22 +536,25 @@ definitions:
     example:
       checks:
       - check:
+          assettype: Hostname
           checktype_name: Occaecati omnis.
-          jobqueue_id: 8dff9567-69ac-4102-bf60-5223c54f16b1
+          jobqueue_id: 4b4611d2-d3c5-4eea-9b9e-42dc70161681
           options: '{ "policy" : "fullscan" }'
           tag: sdrn
           target: www.example.com
           webhook: https://webhook.example.com/callback
       - check:
+          assettype: Hostname
           checktype_name: Occaecati omnis.
-          jobqueue_id: 8dff9567-69ac-4102-bf60-5223c54f16b1
+          jobqueue_id: 4b4611d2-d3c5-4eea-9b9e-42dc70161681
           options: '{ "policy" : "fullscan" }'
           tag: sdrn
           target: www.example.com
           webhook: https://webhook.example.com/callback
       - check:
+          assettype: Hostname
           checktype_name: Occaecati omnis.
-          jobqueue_id: 8dff9567-69ac-4102-bf60-5223c54f16b1
+          jobqueue_id: 4b4611d2-d3c5-4eea-9b9e-42dc70161681
           options: '{ "policy" : "fullscan" }'
           tag: sdrn
           target: www.example.com
@@ -544,22 +563,25 @@ definitions:
       checks:
         example:
         - check:
+            assettype: Hostname
             checktype_name: Occaecati omnis.
-            jobqueue_id: 8dff9567-69ac-4102-bf60-5223c54f16b1
+            jobqueue_id: 4b4611d2-d3c5-4eea-9b9e-42dc70161681
             options: '{ "policy" : "fullscan" }'
             tag: sdrn
             target: www.example.com
             webhook: https://webhook.example.com/callback
         - check:
+            assettype: Hostname
             checktype_name: Occaecati omnis.
-            jobqueue_id: 8dff9567-69ac-4102-bf60-5223c54f16b1
+            jobqueue_id: 4b4611d2-d3c5-4eea-9b9e-42dc70161681
             options: '{ "policy" : "fullscan" }'
             tag: sdrn
             target: www.example.com
             webhook: https://webhook.example.com/callback
         - check:
+            assettype: Hostname
             checktype_name: Occaecati omnis.
-            jobqueue_id: 8dff9567-69ac-4102-bf60-5223c54f16b1
+            jobqueue_id: 4b4611d2-d3c5-4eea-9b9e-42dc70161681
             options: '{ "policy" : "fullscan" }'
             tag: sdrn
             target: www.example.com
@@ -589,22 +611,25 @@ definitions:
       scan:
         checks:
         - check:
+            assettype: Hostname
             checktype_name: Occaecati omnis.
-            jobqueue_id: 8dff9567-69ac-4102-bf60-5223c54f16b1
+            jobqueue_id: 4b4611d2-d3c5-4eea-9b9e-42dc70161681
             options: '{ "policy" : "fullscan" }'
             tag: sdrn
             target: www.example.com
             webhook: https://webhook.example.com/callback
         - check:
+            assettype: Hostname
             checktype_name: Occaecati omnis.
-            jobqueue_id: 8dff9567-69ac-4102-bf60-5223c54f16b1
+            jobqueue_id: 4b4611d2-d3c5-4eea-9b9e-42dc70161681
             options: '{ "policy" : "fullscan" }'
             tag: sdrn
             target: www.example.com
             webhook: https://webhook.example.com/callback
         - check:
+            assettype: Hostname
             checktype_name: Occaecati omnis.
-            jobqueue_id: 8dff9567-69ac-4102-bf60-5223c54f16b1
+            jobqueue_id: 4b4611d2-d3c5-4eea-9b9e-42dc70161681
             options: '{ "policy" : "fullscan" }'
             tag: sdrn
             target: www.example.com
@@ -618,7 +643,7 @@ definitions:
     description: Scancheckdata media type (default view)
     example:
       checktype_name: Possimus aut officiis illum.
-      id: 38f9faa7-8ca9-48e1-bd1d-c1f99095688e
+      id: de8795ac-478b-4ae6-8f14-98c69d0747e0
       status: Quisquam dolor voluptas.
       target: www.example.com
     properties:
@@ -627,7 +652,7 @@ definitions:
         example: Possimus aut officiis illum.
         type: string
       id:
-        example: 38f9faa7-8ca9-48e1-bd1d-c1f99095688e
+        example: de8795ac-478b-4ae6-8f14-98c69d0747e0
         format: uuid
         type: string
       status:
@@ -650,7 +675,7 @@ definitions:
     description: Scandata media type (default view)
     example:
       created_at: "1979-07-29T10:51:24Z"
-      id: 9c3280d0-a054-424f-8afb-2fc8ef6bca98
+      id: 6080d161-0006-4c92-999d-5025a6b629ef
       size: 8988686510645284907
     properties:
       created_at:
@@ -658,7 +683,7 @@ definitions:
         format: date-time
         type: string
       id:
-        example: 9c3280d0-a054-424f-8afb-2fc8ef6bca98
+        example: 6080d161-0006-4c92-999d-5025a6b629ef
         format: uuid
         type: string
       size:

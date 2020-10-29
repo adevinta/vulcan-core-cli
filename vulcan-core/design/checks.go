@@ -88,6 +88,13 @@ var CheckData = Type("CheckData", func() {
 		The queue must already be created in vulcan core.`)
 	})
 
+	Attribute("assettype", String, func() {
+		MinLength(1)
+		Example(`Hostname`)
+		Pattern("^[[:print:]]+")
+		Description("Asset type of the target. Can be a DomainName, Hostname, etc.")
+	})
+
 	Required("target")
 })
 
@@ -113,6 +120,7 @@ var CheckMediaData = MediaType("application/vnd.checkdata+json", func() {
 		Attribute("progress", Number)
 		Attribute("raw", String)
 		Attribute("report", String)
+		Attribute("assettype", String)
 		Required("id", "checktype", "target", "status")
 	})
 
@@ -127,6 +135,7 @@ var CheckMediaData = MediaType("application/vnd.checkdata+json", func() {
 		Attribute("raw")
 		Attribute("report")
 		Attribute("scan")
+		Attribute("assettype")
 	})
 })
 
