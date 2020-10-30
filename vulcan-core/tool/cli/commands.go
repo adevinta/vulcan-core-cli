@@ -193,8 +193,9 @@ Payload example:
 
 {
    "check": {
+      "assettype": "Hostname",
       "checktype_name": "Occaecati omnis.",
-      "jobqueue_id": "8dff9567-69ac-4102-bf60-5223c54f16b1",
+      "jobqueue_id": "4b4611d2-d3c5-4eea-9b9e-42dc70161681",
       "options": "{ \"policy\" : \"fullscan\" }",
       "tag": "sdrn",
       "target": "www.example.com",
@@ -219,8 +220,9 @@ Payload example:
       "checks": [
          {
             "check": {
+               "assettype": "Hostname",
                "checktype_name": "Occaecati omnis.",
-               "jobqueue_id": "8dff9567-69ac-4102-bf60-5223c54f16b1",
+               "jobqueue_id": "4b4611d2-d3c5-4eea-9b9e-42dc70161681",
                "options": "{ \"policy\" : \"fullscan\" }",
                "tag": "sdrn",
                "target": "www.example.com",
@@ -229,8 +231,9 @@ Payload example:
          },
          {
             "check": {
+               "assettype": "Hostname",
                "checktype_name": "Occaecati omnis.",
-               "jobqueue_id": "8dff9567-69ac-4102-bf60-5223c54f16b1",
+               "jobqueue_id": "4b4611d2-d3c5-4eea-9b9e-42dc70161681",
                "options": "{ \"policy\" : \"fullscan\" }",
                "tag": "sdrn",
                "target": "www.example.com",
@@ -239,8 +242,9 @@ Payload example:
          },
          {
             "check": {
+               "assettype": "Hostname",
                "checktype_name": "Occaecati omnis.",
-               "jobqueue_id": "8dff9567-69ac-4102-bf60-5223c54f16b1",
+               "jobqueue_id": "4b4611d2-d3c5-4eea-9b9e-42dc70161681",
                "options": "{ \"policy\" : \"fullscan\" }",
                "tag": "sdrn",
                "target": "www.example.com",

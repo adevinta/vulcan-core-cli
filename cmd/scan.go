@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"path/filepath"
+	"strings"
 	"time"
 
 	cli "github.com/adevinta/vulcan-core-cli"
@@ -17,10 +18,14 @@ var scanCmd = &cobra.Command{
 	Short: "Executes a scan for the specified checktypes and assets",
 	Long: `Executes a scan for the specified checktypes and assets.
 	The command takes two params.
-	The first one is a path to a file containing a list of targets one per line e.g:
+	The first parameter is a path to a file containing a list of targets one per line e.g:
 	example.com
-	anotherexample.com
-	The next one is a path to a file containing a list of checktypes to execute.
+	anotherexample.com;DomainName
+	Each line must have the following format:
+	target;assettype
+	Only the first field name is mandatory.
+	The fields are separated by a semicolon ";".
+	The second parameter is a path to a file containing a list of checktypes to execute.
 	Each line must have the following format:
 	name;options;queueid
 	Only the first field name is mandatory.
@@ -98,14 +103,19 @@ func init() {
 	scanCmd.Flags().BoolVarP(&multiPart, "multipart", "m", false, "use multipart upload file api")
 }
 
+type asset struct {
+	target    string
+	assetType string
+}
+
 func createScanChecks(targetsFile, checktypesFile string) (cli.Checks, error) {
-	targets, err := cli.ReadLines(targetsFile)
+	assets, err := parseTargetsFile(targetsFile)
 	if err != nil {
 		return nil, err
 	}
-	log.Printf("num targets: %v\n", len(targets))
+	log.Printf("num targets: %v\n", len(assets))
 	if verbose {
-		log.Printf("targets %v\n", targets)
+		log.Printf("targets %v\n", assets)
 	}
 
 	checktypes, err := parseChecktypesFile(checktypesFile)
@@ -120,18 +130,45 @@ func createScanChecks(targetsFile, checktypesFile string) (cli.Checks, error) {
 	checks := cli.Checks{}
 
 	for _, checktype := range checktypes {
-		var assets []cli.Asset
+		var cliAssets []cli.Asset
 
-		for _, target := range targets {
-			asset := cli.Asset{
-				Target:  target,
-				Options: checktype.DefaultOptions,
-				QueueID: checktype.QueueID,
+		for _, asset := range assets {
+			cliAsset := cli.Asset{
+				Target:    asset.target,
+				AssetType: asset.assetType,
+				Options:   checktype.DefaultOptions,
+				QueueID:   checktype.QueueID,
 			}
-			assets = append(assets, asset)
+			cliAssets = append(cliAssets, cliAsset)
 		}
-		checks[checktype.Name] = assets
+		checks[checktype.Name] = cliAssets
 	}
 
 	return checks, nil
+}
+
+// parseTargetsFile is used to read assets from a file.
+func parseTargetsFile(file string) ([]asset, error) {
+	targetLines, err := cli.ReadLines(file)
+	if err != nil {
+		return nil, err
+	}
+
+	var assets []asset
+
+	for _, line := range targetLines {
+		// Every line of the file is an asset: a target and optionally the asset type.
+		params := strings.SplitN(line, ";", 2)
+		if len(params) < 1 {
+			return nil, fmt.Errorf("malformed asset in line: %v", line)
+		}
+
+		asset := asset{target: params[0]}
+		if len(params) > 1 {
+			asset.assetType = params[1]
+		}
+		assets = append(assets, asset)
+	}
+
+	return assets, nil
 }

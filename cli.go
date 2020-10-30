@@ -181,9 +181,10 @@ func (c Checks) ToString() string {
 // Asset defines the asset where a concrete checktype will be executed
 // with a set of options and a concrete queue.
 type Asset struct {
-	Target  string
-	Options string
-	QueueID string
+	Target    string
+	Options   string
+	QueueID   string
+	AssetType string
 }
 
 type CLI struct {
@@ -231,12 +232,17 @@ func (cli *CLI) RunScan(checks Checks, dryRun string, useMultipart bool) (*Scan,
 				}
 				queueID = &id
 			}
+			var assetType *string
+			if asset.AssetType != "" {
+				assetType = &asset.AssetType
+			}
 			checkPayload := &client.CheckPayload{
 				Check: &client.CheckData{
 					ChecktypeName: &checktypeName,
 					Target:        asset.Target,
 					Options:       &opts,
 					JobqueueID:    queueID,
+					Assettype:     assetType,
 				},
 			}
 			checksPayload = append(checksPayload, checkPayload)

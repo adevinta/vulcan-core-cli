@@ -205,6 +205,8 @@ func (c *Client) DecodeCheck(resp *http.Response) (*Check, error) {
 //
 // Identifier: application/vnd.checkdata+json; view=default
 type Checkdata struct {
+	// Asset type of the target. Can be a DomainName, Hostname, etc.
+	Assettype *string        `form:"assettype,omitempty" json:"assettype,omitempty" yaml:"assettype,omitempty" xml:"assettype,omitempty"`
 	Checktype *ChecktypeType `form:"checktype" json:"checktype" yaml:"checktype" xml:"checktype"`
 	ID        uuid.UUID      `form:"id" json:"id" yaml:"id" xml:"id"`
 	// Configuration options for the Check. It should be in JSON format
@@ -231,6 +233,16 @@ func (mt *Checkdata) Validate() (err error) {
 	}
 	if mt.Status == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "status"))
+	}
+	if mt.Assettype != nil {
+		if ok := goa.ValidatePattern(`^[[:print:]]+`, *mt.Assettype); !ok {
+			err = goa.MergeErrors(err, goa.InvalidPatternError(`response.assettype`, *mt.Assettype, `^[[:print:]]+`))
+		}
+	}
+	if mt.Assettype != nil {
+		if utf8.RuneCountInString(*mt.Assettype) < 1 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.assettype`, *mt.Assettype, utf8.RuneCountInString(*mt.Assettype), 1, true))
+		}
 	}
 	if mt.Checktype != nil {
 		if err2 := mt.Checktype.Validate(); err2 != nil {
