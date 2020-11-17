@@ -208,7 +208,8 @@ type Checkdata struct {
 	// Asset type of the target. Can be a DomainName, Hostname, etc.
 	Assettype *string        `form:"assettype,omitempty" json:"assettype,omitempty" yaml:"assettype,omitempty" xml:"assettype,omitempty"`
 	Checktype *ChecktypeType `form:"checktype" json:"checktype" yaml:"checktype" xml:"checktype"`
-	ID        uuid.UUID      `form:"id" json:"id" yaml:"id" xml:"id"`
+	// The ID to be used in a check
+	ID uuid.UUID `form:"id" json:"id" yaml:"id" xml:"id"`
 	// Configuration options for the Check. It should be in JSON format
 	Options  *string   `form:"options,omitempty" json:"options,omitempty" yaml:"options,omitempty" xml:"options,omitempty"`
 	Progress *float64  `form:"progress,omitempty" json:"progress,omitempty" yaml:"progress,omitempty" xml:"progress,omitempty"`
@@ -431,9 +432,10 @@ func (c *Client) DecodeScan(resp *http.Response) (*Scan, error) {
 // Identifier: application/vnd.scancheckdata+json; view=default
 type Scancheckdata struct {
 	// Name of the checktype this check is
-	ChecktypeName string    `form:"checktype_name" json:"checktype_name" yaml:"checktype_name" xml:"checktype_name"`
-	ID            uuid.UUID `form:"id" json:"id" yaml:"id" xml:"id"`
-	Status        string    `form:"status" json:"status" yaml:"status" xml:"status"`
+	ChecktypeName string `form:"checktype_name" json:"checktype_name" yaml:"checktype_name" xml:"checktype_name"`
+	// The ID to be used in a check
+	ID     uuid.UUID `form:"id" json:"id" yaml:"id" xml:"id"`
+	Status string    `form:"status" json:"status" yaml:"status" xml:"status"`
 	// Target to be scanned. Can be a domain, hostname, IP or URL
 	Target string `form:"target" json:"target" yaml:"target" xml:"target"`
 }

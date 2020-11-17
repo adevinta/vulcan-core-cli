@@ -195,8 +195,11 @@ Payload example:
    "check": {
       "assettype": "Hostname",
       "checktype_name": "Occaecati omnis.",
-      "jobqueue_id": "4b4611d2-d3c5-4eea-9b9e-42dc70161681",
+      "id": "dbbfa4f6-3ce5-44f5-88f2-d183521c4f88",
+      "jobqueue_id": "d1ebad62-456f-4a33-b331-e42a0cc886db",
       "options": "{ \"policy\" : \"fullscan\" }",
+      "program_id": "Sunt ab dolor voluptates.",
+      "scan_id": "dba896d7-df1b-4238-a881-b3b8367cb147",
       "tag": "sdrn",
       "target": "www.example.com",
       "webhook": "https://webhook.example.com/callback"
@@ -222,8 +225,11 @@ Payload example:
             "check": {
                "assettype": "Hostname",
                "checktype_name": "Occaecati omnis.",
-               "jobqueue_id": "4b4611d2-d3c5-4eea-9b9e-42dc70161681",
+               "id": "dbbfa4f6-3ce5-44f5-88f2-d183521c4f88",
+               "jobqueue_id": "d1ebad62-456f-4a33-b331-e42a0cc886db",
                "options": "{ \"policy\" : \"fullscan\" }",
+               "program_id": "Sunt ab dolor voluptates.",
+               "scan_id": "dba896d7-df1b-4238-a881-b3b8367cb147",
                "tag": "sdrn",
                "target": "www.example.com",
                "webhook": "https://webhook.example.com/callback"
@@ -233,19 +239,11 @@ Payload example:
             "check": {
                "assettype": "Hostname",
                "checktype_name": "Occaecati omnis.",
-               "jobqueue_id": "4b4611d2-d3c5-4eea-9b9e-42dc70161681",
+               "id": "dbbfa4f6-3ce5-44f5-88f2-d183521c4f88",
+               "jobqueue_id": "d1ebad62-456f-4a33-b331-e42a0cc886db",
                "options": "{ \"policy\" : \"fullscan\" }",
-               "tag": "sdrn",
-               "target": "www.example.com",
-               "webhook": "https://webhook.example.com/callback"
-            }
-         },
-         {
-            "check": {
-               "assettype": "Hostname",
-               "checktype_name": "Occaecati omnis.",
-               "jobqueue_id": "4b4611d2-d3c5-4eea-9b9e-42dc70161681",
-               "options": "{ \"policy\" : \"fullscan\" }",
+               "program_id": "Sunt ab dolor voluptates.",
+               "scan_id": "dba896d7-df1b-4238-a881-b3b8367cb147",
                "tag": "sdrn",
                "target": "www.example.com",
                "webhook": "https://webhook.example.com/callback"
@@ -406,9 +404,9 @@ Payload example:
 Payload example:
 
 {
-   "program_id": "Sunt ab dolor voluptates.",
-   "tag": "Ut libero quidem omnis et.",
-   "upload": "Maxime eos ut officiis.jpg"
+   "program_id": "Ut libero quidem omnis et.",
+   "tag": "Maxime eos ut officiis officia.",
+   "upload": "Modi autem omnis quae nihil rerum.jpg"
 }`,
 		RunE: func(cmd *cobra.Command, args []string) error { return tmp18.Run(c, args) },
 	}
