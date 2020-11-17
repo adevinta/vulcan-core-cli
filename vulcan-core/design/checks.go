@@ -83,6 +83,10 @@ var CheckData = Type("CheckData", func() {
 		Description("a tag")
 	})
 
+	Attribute("program_id", String, func() {
+		Description(`The program id, if any, that the check belongs to`)
+	})
+
 	Attribute("jobqueue_id", UUID, func() {
 		Description(`ID of the specific queue this check must we enqueued.
 		The queue must already be created in vulcan core.`)
@@ -93,6 +97,14 @@ var CheckData = Type("CheckData", func() {
 		Example(`Hostname`)
 		Pattern("^[[:print:]]+")
 		Description("Asset type of the target. Can be a DomainName, Hostname, etc.")
+	})
+
+	Attribute("scan_id", UUID, func() {
+		Description(`ID of the scan the check belongs to`)
+	})
+
+	Attribute("id", UUID, func() {
+		Description(`The ID to be used in a check`)
 	})
 
 	Required("target")

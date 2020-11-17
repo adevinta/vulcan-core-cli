@@ -103,11 +103,17 @@ type checkData struct {
 	Assettype *string `form:"assettype,omitempty" json:"assettype,omitempty" yaml:"assettype,omitempty" xml:"assettype,omitempty"`
 	// Name of the checktype this check is
 	ChecktypeName *string `form:"checktype_name,omitempty" json:"checktype_name,omitempty" yaml:"checktype_name,omitempty" xml:"checktype_name,omitempty"`
+	// The ID to be used in a check
+	ID *uuid.UUID `form:"id,omitempty" json:"id,omitempty" yaml:"id,omitempty" xml:"id,omitempty"`
 	// ID of the specific queue this check must we enqueued.
 	// 		The queue must already be created in vulcan core.
 	JobqueueID *uuid.UUID `form:"jobqueue_id,omitempty" json:"jobqueue_id,omitempty" yaml:"jobqueue_id,omitempty" xml:"jobqueue_id,omitempty"`
 	// Configuration options for the Check. It should be in JSON format
 	Options *string `form:"options,omitempty" json:"options,omitempty" yaml:"options,omitempty" xml:"options,omitempty"`
+	// The program id, if any, that the check belongs to
+	ProgramID *string `form:"program_id,omitempty" json:"program_id,omitempty" yaml:"program_id,omitempty" xml:"program_id,omitempty"`
+	// ID of a scan to check is included in
+	ScanID *uuid.UUID `form:"scan_id,omitempty" json:"scan_id,omitempty" yaml:"scan_id,omitempty" xml:"scan_id,omitempty"`
 	// a tag
 	Tag *string `form:"tag,omitempty" json:"tag,omitempty" yaml:"tag,omitempty" xml:"tag,omitempty"`
 	// Target to be scanned. Can be a domain, hostname, IP or URL
@@ -178,11 +184,20 @@ func (ut *checkData) Publicize() *CheckData {
 	if ut.ChecktypeName != nil {
 		pub.ChecktypeName = ut.ChecktypeName
 	}
+	if ut.ID != nil {
+		pub.ID = ut.ID
+	}
 	if ut.JobqueueID != nil {
 		pub.JobqueueID = ut.JobqueueID
 	}
 	if ut.Options != nil {
 		pub.Options = ut.Options
+	}
+	if ut.ProgramID != nil {
+		pub.ProgramID = ut.ProgramID
+	}
+	if ut.ScanID != nil {
+		pub.ScanID = ut.ScanID
 	}
 	if ut.Tag != nil {
 		pub.Tag = ut.Tag
@@ -202,11 +217,17 @@ type CheckData struct {
 	Assettype *string `form:"assettype,omitempty" json:"assettype,omitempty" yaml:"assettype,omitempty" xml:"assettype,omitempty"`
 	// Name of the checktype this check is
 	ChecktypeName *string `form:"checktype_name,omitempty" json:"checktype_name,omitempty" yaml:"checktype_name,omitempty" xml:"checktype_name,omitempty"`
+	// The ID to be used in a check
+	ID *uuid.UUID `form:"id,omitempty" json:"id,omitempty" yaml:"id,omitempty" xml:"id,omitempty"`
 	// ID of the specific queue this check must we enqueued.
 	// 		The queue must already be created in vulcan core.
 	JobqueueID *uuid.UUID `form:"jobqueue_id,omitempty" json:"jobqueue_id,omitempty" yaml:"jobqueue_id,omitempty" xml:"jobqueue_id,omitempty"`
 	// Configuration options for the Check. It should be in JSON format
 	Options *string `form:"options,omitempty" json:"options,omitempty" yaml:"options,omitempty" xml:"options,omitempty"`
+	// The program id, if any, that the check belongs to
+	ProgramID *string `form:"program_id,omitempty" json:"program_id,omitempty" yaml:"program_id,omitempty" xml:"program_id,omitempty"`
+	// ID of a scan to check is included in
+	ScanID *uuid.UUID `form:"scan_id,omitempty" json:"scan_id,omitempty" yaml:"scan_id,omitempty" xml:"scan_id,omitempty"`
 	// a tag
 	Tag *string `form:"tag,omitempty" json:"tag,omitempty" yaml:"tag,omitempty" xml:"tag,omitempty"`
 	// Target to be scanned. Can be a domain, hostname, IP or URL
