@@ -332,7 +332,7 @@ func (ut *CheckPayload) Validate() (err error) {
 
 // checktypeType user type.
 type checktypeType struct {
-	// List of  the asset types that this checktype allows to be used against to
+	// List of the asset types that this checktype allows to be used against to
 	Assets      []string   `form:"assets,omitempty" json:"assets,omitempty" yaml:"assets,omitempty" xml:"assets,omitempty"`
 	Description *string    `form:"description,omitempty" json:"description,omitempty" yaml:"description,omitempty" xml:"description,omitempty"`
 	Enabled     *bool      `form:"enabled,omitempty" json:"enabled,omitempty" yaml:"enabled,omitempty" xml:"enabled,omitempty"`
@@ -344,7 +344,7 @@ type checktypeType struct {
 	Options *string `form:"options,omitempty" json:"options,omitempty" yaml:"options,omitempty" xml:"options,omitempty"`
 	// The queue name to be used by a check of this type
 	QueueName *string `form:"queue_name,omitempty" json:"queue_name,omitempty" yaml:"queue_name,omitempty" xml:"queue_name,omitempty"`
-	// List of  required vars that the agent must inject to a check using this checktype
+	// List of required vars that the agent must inject to a check using this checktype
 	RequiredVars []string `form:"required_vars,omitempty" json:"required_vars,omitempty" yaml:"required_vars,omitempty" xml:"required_vars,omitempty"`
 	// Specifies the maximum amount of time that the check should be running before it's killed
 	Timeout *int `form:"timeout,omitempty" json:"timeout,omitempty" yaml:"timeout,omitempty" xml:"timeout,omitempty"`
@@ -422,7 +422,7 @@ func (ut *checktypeType) Publicize() *ChecktypeType {
 
 // ChecktypeType user type.
 type ChecktypeType struct {
-	// List of  the asset types that this checktype allows to be used against to
+	// List of the asset types that this checktype allows to be used against to
 	Assets      []string  `form:"assets,omitempty" json:"assets,omitempty" yaml:"assets,omitempty" xml:"assets,omitempty"`
 	Description *string   `form:"description,omitempty" json:"description,omitempty" yaml:"description,omitempty" xml:"description,omitempty"`
 	Enabled     *bool     `form:"enabled,omitempty" json:"enabled,omitempty" yaml:"enabled,omitempty" xml:"enabled,omitempty"`
@@ -434,7 +434,7 @@ type ChecktypeType struct {
 	Options *string `form:"options,omitempty" json:"options,omitempty" yaml:"options,omitempty" xml:"options,omitempty"`
 	// The queue name to be used by a check of this type
 	QueueName *string `form:"queue_name,omitempty" json:"queue_name,omitempty" yaml:"queue_name,omitempty" xml:"queue_name,omitempty"`
-	// List of  required vars that the agent must inject to a check using this checktype
+	// List of required vars that the agent must inject to a check using this checktype
 	RequiredVars []string `form:"required_vars,omitempty" json:"required_vars,omitempty" yaml:"required_vars,omitempty" xml:"required_vars,omitempty"`
 	// Specifies the maximum amount of time that the check should be running before it's killed
 	Timeout *int `form:"timeout,omitempty" json:"timeout,omitempty" yaml:"timeout,omitempty" xml:"timeout,omitempty"`
