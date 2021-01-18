@@ -22,8 +22,8 @@ func IndexChecktypesPath() string {
 }
 
 // Get all checktypes
-func (c *Client) IndexChecktypes(ctx context.Context, path string, enabled *string) (*http.Response, error) {
-	req, err := c.NewIndexChecktypesRequest(ctx, path, enabled)
+func (c *Client) IndexChecktypes(ctx context.Context, path string, enabled *string, name *string) (*http.Response, error) {
+	req, err := c.NewIndexChecktypesRequest(ctx, path, enabled, name)
 	if err != nil {
 		return nil, err
 	}
@@ -31,7 +31,7 @@ func (c *Client) IndexChecktypes(ctx context.Context, path string, enabled *stri
 }
 
 // NewIndexChecktypesRequest create the request corresponding to the index action endpoint of the Checktypes resource.
-func (c *Client) NewIndexChecktypesRequest(ctx context.Context, path string, enabled *string) (*http.Request, error) {
+func (c *Client) NewIndexChecktypesRequest(ctx context.Context, path string, enabled *string, name *string) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
 		scheme = "http"
@@ -40,6 +40,9 @@ func (c *Client) NewIndexChecktypesRequest(ctx context.Context, path string, ena
 	values := u.Query()
 	if enabled != nil {
 		values.Set("enabled", *enabled)
+	}
+	if name != nil {
+		values.Set("name", *name)
 	}
 	u.RawQuery = values.Encode()
 	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), nil)

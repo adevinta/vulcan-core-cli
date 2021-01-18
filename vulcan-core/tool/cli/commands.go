@@ -75,6 +75,7 @@ type (
 	// IndexChecktypesCommand is the command line data structure for the index action of Checktypes
 	IndexChecktypesCommand struct {
 		Enabled     string
+		Name        string
 		PrettyPrint bool
 	}
 
@@ -194,12 +195,12 @@ Payload example:
 {
    "check": {
       "assettype": "Hostname",
-      "checktype_name": "Occaecati omnis.",
-      "id": "dbbfa4f6-3ce5-44f5-88f2-d183521c4f88",
-      "jobqueue_id": "d1ebad62-456f-4a33-b331-e42a0cc886db",
+      "checktype_name": "Voluptates doloribus ut libero.",
+      "id": "f36dcbbd-8022-4fb2-8dae-983e5b3344b9",
+      "jobqueue_id": "5286f6ae-8840-46ec-b53d-1a40a3a4b988",
       "options": "{ \"policy\" : \"fullscan\" }",
-      "program_id": "Sunt ab dolor voluptates.",
-      "scan_id": "dba896d7-df1b-4238-a881-b3b8367cb147",
+      "program_id": "Omnis et ratione maxime.",
+      "scan_id": "417df201-25ac-4d51-8b9d-eb0105db4ed6",
       "tag": "sdrn",
       "target": "www.example.com",
       "webhook": "https://webhook.example.com/callback"
@@ -224,12 +225,12 @@ Payload example:
          {
             "check": {
                "assettype": "Hostname",
-               "checktype_name": "Occaecati omnis.",
-               "id": "dbbfa4f6-3ce5-44f5-88f2-d183521c4f88",
-               "jobqueue_id": "d1ebad62-456f-4a33-b331-e42a0cc886db",
+               "checktype_name": "Voluptates doloribus ut libero.",
+               "id": "f36dcbbd-8022-4fb2-8dae-983e5b3344b9",
+               "jobqueue_id": "5286f6ae-8840-46ec-b53d-1a40a3a4b988",
                "options": "{ \"policy\" : \"fullscan\" }",
-               "program_id": "Sunt ab dolor voluptates.",
-               "scan_id": "dba896d7-df1b-4238-a881-b3b8367cb147",
+               "program_id": "Omnis et ratione maxime.",
+               "scan_id": "417df201-25ac-4d51-8b9d-eb0105db4ed6",
                "tag": "sdrn",
                "target": "www.example.com",
                "webhook": "https://webhook.example.com/callback"
@@ -238,12 +239,12 @@ Payload example:
          {
             "check": {
                "assettype": "Hostname",
-               "checktype_name": "Occaecati omnis.",
-               "id": "dbbfa4f6-3ce5-44f5-88f2-d183521c4f88",
-               "jobqueue_id": "d1ebad62-456f-4a33-b331-e42a0cc886db",
+               "checktype_name": "Voluptates doloribus ut libero.",
+               "id": "f36dcbbd-8022-4fb2-8dae-983e5b3344b9",
+               "jobqueue_id": "5286f6ae-8840-46ec-b53d-1a40a3a4b988",
                "options": "{ \"policy\" : \"fullscan\" }",
-               "program_id": "Sunt ab dolor voluptates.",
-               "scan_id": "dba896d7-df1b-4238-a881-b3b8367cb147",
+               "program_id": "Omnis et ratione maxime.",
+               "scan_id": "417df201-25ac-4d51-8b9d-eb0105db4ed6",
                "tag": "sdrn",
                "target": "www.example.com",
                "webhook": "https://webhook.example.com/callback"
@@ -404,9 +405,9 @@ Payload example:
 Payload example:
 
 {
-   "program_id": "Ut libero quidem omnis et.",
-   "tag": "Maxime eos ut officiis officia.",
-   "upload": "Modi autem omnis quae nihil rerum.jpg"
+   "program_id": "Ut officiis officia.",
+   "tag": "Modi autem omnis quae nihil rerum omnis.",
+   "upload": "Vitae.jpg"
 }`,
 		RunE: func(cmd *cobra.Command, args []string) error { return tmp18.Run(c, args) },
 	}
@@ -842,7 +843,7 @@ func (cmd *IndexChecktypesCommand) Run(c *client.Client, args []string) error {
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
-	resp, err := c.IndexChecktypes(ctx, path, stringFlagVal("enabled", cmd.Enabled))
+	resp, err := c.IndexChecktypes(ctx, path, stringFlagVal("enabled", cmd.Enabled), stringFlagVal("name", cmd.Name))
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
@@ -855,6 +856,8 @@ func (cmd *IndexChecktypesCommand) Run(c *client.Client, args []string) error {
 // RegisterFlags registers the command flags with the command line.
 func (cmd *IndexChecktypesCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 	cc.Flags().StringVar(&cmd.Enabled, "enabled", "true", ``)
+	var name string
+	cc.Flags().StringVar(&cmd.Name, "name", name, ``)
 }
 
 // Run makes the HTTP request corresponding to the ShowChecktypesCommand command.
