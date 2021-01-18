@@ -112,7 +112,7 @@ type checkData struct {
 	Options *string `form:"options,omitempty" json:"options,omitempty" yaml:"options,omitempty" xml:"options,omitempty"`
 	// The program id, if any, that the check belongs to
 	ProgramID *string `form:"program_id,omitempty" json:"program_id,omitempty" yaml:"program_id,omitempty" xml:"program_id,omitempty"`
-	// ID of a scan to check is included in
+	// ID of the scan the check belongs to
 	ScanID *uuid.UUID `form:"scan_id,omitempty" json:"scan_id,omitempty" yaml:"scan_id,omitempty" xml:"scan_id,omitempty"`
 	// a tag
 	Tag *string `form:"tag,omitempty" json:"tag,omitempty" yaml:"tag,omitempty" xml:"tag,omitempty"`
@@ -226,7 +226,7 @@ type CheckData struct {
 	Options *string `form:"options,omitempty" json:"options,omitempty" yaml:"options,omitempty" xml:"options,omitempty"`
 	// The program id, if any, that the check belongs to
 	ProgramID *string `form:"program_id,omitempty" json:"program_id,omitempty" yaml:"program_id,omitempty" xml:"program_id,omitempty"`
-	// ID of a scan to check is included in
+	// ID of the scan the check belongs to
 	ScanID *uuid.UUID `form:"scan_id,omitempty" json:"scan_id,omitempty" yaml:"scan_id,omitempty" xml:"scan_id,omitempty"`
 	// a tag
 	Tag *string `form:"tag,omitempty" json:"tag,omitempty" yaml:"tag,omitempty" xml:"tag,omitempty"`
@@ -332,6 +332,8 @@ func (ut *CheckPayload) Validate() (err error) {
 
 // checktypeType user type.
 type checktypeType struct {
+	// List of  the asset types that this checktype allows to be used against to
+	Assets      []string   `form:"assets,omitempty" json:"assets,omitempty" yaml:"assets,omitempty" xml:"assets,omitempty"`
 	Description *string    `form:"description,omitempty" json:"description,omitempty" yaml:"description,omitempty" xml:"description,omitempty"`
 	Enabled     *bool      `form:"enabled,omitempty" json:"enabled,omitempty" yaml:"enabled,omitempty" xml:"enabled,omitempty"`
 	ID          *uuid.UUID `form:"id,omitempty" json:"id,omitempty" yaml:"id,omitempty" xml:"id,omitempty"`
@@ -340,6 +342,10 @@ type checktypeType struct {
 	Name  *string `form:"name,omitempty" json:"name,omitempty" yaml:"name,omitempty" xml:"name,omitempty"`
 	// Default configuration options for the Checktype. It should be in JSON format
 	Options *string `form:"options,omitempty" json:"options,omitempty" yaml:"options,omitempty" xml:"options,omitempty"`
+	// The queue name to be used by a check of this type
+	QueueName *string `form:"queue_name,omitempty" json:"queue_name,omitempty" yaml:"queue_name,omitempty" xml:"queue_name,omitempty"`
+	// List of  required vars that the agent must inject to a check using this checktype
+	RequiredVars []string `form:"required_vars,omitempty" json:"required_vars,omitempty" yaml:"required_vars,omitempty" xml:"required_vars,omitempty"`
 	// Specifies the maximum amount of time that the check should be running before it's killed
 	Timeout *int `form:"timeout,omitempty" json:"timeout,omitempty" yaml:"timeout,omitempty" xml:"timeout,omitempty"`
 }
@@ -381,6 +387,9 @@ func (ut *checktypeType) Validate() (err error) {
 // Publicize creates ChecktypeType from checktypeType
 func (ut *checktypeType) Publicize() *ChecktypeType {
 	var pub ChecktypeType
+	if ut.Assets != nil {
+		pub.Assets = ut.Assets
+	}
 	if ut.Description != nil {
 		pub.Description = ut.Description
 	}
@@ -399,6 +408,12 @@ func (ut *checktypeType) Publicize() *ChecktypeType {
 	if ut.Options != nil {
 		pub.Options = ut.Options
 	}
+	if ut.QueueName != nil {
+		pub.QueueName = ut.QueueName
+	}
+	if ut.RequiredVars != nil {
+		pub.RequiredVars = ut.RequiredVars
+	}
 	if ut.Timeout != nil {
 		pub.Timeout = ut.Timeout
 	}
@@ -407,6 +422,8 @@ func (ut *checktypeType) Publicize() *ChecktypeType {
 
 // ChecktypeType user type.
 type ChecktypeType struct {
+	// List of  the asset types that this checktype allows to be used against to
+	Assets      []string  `form:"assets,omitempty" json:"assets,omitempty" yaml:"assets,omitempty" xml:"assets,omitempty"`
 	Description *string   `form:"description,omitempty" json:"description,omitempty" yaml:"description,omitempty" xml:"description,omitempty"`
 	Enabled     *bool     `form:"enabled,omitempty" json:"enabled,omitempty" yaml:"enabled,omitempty" xml:"enabled,omitempty"`
 	ID          uuid.UUID `form:"id" json:"id" yaml:"id" xml:"id"`
@@ -415,6 +432,10 @@ type ChecktypeType struct {
 	Name  string `form:"name" json:"name" yaml:"name" xml:"name"`
 	// Default configuration options for the Checktype. It should be in JSON format
 	Options *string `form:"options,omitempty" json:"options,omitempty" yaml:"options,omitempty" xml:"options,omitempty"`
+	// The queue name to be used by a check of this type
+	QueueName *string `form:"queue_name,omitempty" json:"queue_name,omitempty" yaml:"queue_name,omitempty" xml:"queue_name,omitempty"`
+	// List of  required vars that the agent must inject to a check using this checktype
+	RequiredVars []string `form:"required_vars,omitempty" json:"required_vars,omitempty" yaml:"required_vars,omitempty" xml:"required_vars,omitempty"`
 	// Specifies the maximum amount of time that the check should be running before it's killed
 	Timeout *int `form:"timeout,omitempty" json:"timeout,omitempty" yaml:"timeout,omitempty" xml:"timeout,omitempty"`
 }

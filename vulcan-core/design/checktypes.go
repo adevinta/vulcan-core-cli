@@ -14,6 +14,9 @@ var _ = Resource("Checktypes", func() {
 			Param("enabled", String, func() {
 				Default("true")
 			})
+			Param("name", String, func() {
+				Default("")
+			})
 		})
 		Description("Get all checktypes")
 		Response(OK, ChecktypeMediaCollection)
@@ -47,8 +50,11 @@ var ChecktypeType = Type("ChecktypeType", func() {
 	})
 	Attribute("options", String, "Default configuration options for the Checktype. It should be in JSON format")
 	Attribute("enabled", Boolean)
+	Attribute("queue_name", String, "The queue name to be used by a check of this type")
 	Attribute("timeout", Integer, "Specifies the maximum amount of time that the check should be running before it's killed")
 	Attribute("image", String, "Image that needs to be pulled to run the Check of this type")
+	Attribute("assets", ArrayOf(String), "List of  the asset types that this checktype allows to be used against to")
+	Attribute("required_vars", ArrayOf(String), "List of  required vars that the agent must inject to a check using this checktype")
 	Required("id", "name", "image")
 })
 
