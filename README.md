@@ -21,64 +21,9 @@ go get -v github.com/adevinta/vulcan-core-cli
 
 Execute `vulcan-core-cli` and check its commands and options.
 
-[![asciicast](https://asciinema.org/a/vjI0SSe6VJJqxRYMsheicUTZr.png)](https://asciinema.org/a/vjI0SSe6VJJqxRYMsheicUTZr)
-
 ### Commands
 
 Current commands are:
-
-#### cscan
-
-Executes checks based in the checktypes and assets defined in the Vulcan Continuous directory (vdir). The vcdir is structured in the following way:
-- Contains a file for every checktype to be executed.
-- The name of the file must be the name of the checktype.
-- The first line of the file contains the default options of the checktype (blank line if there are no default options).
-- The following lines are one per asset.
-- The asset lines contains the target, and optionally separated by a space the options for the checktype for that asset.
-
-Example of the content of one of the checktype files:
-```
-default_options
-asset1 options
-asset2 options
-asset2
-```
-
-Example of the content of the vcdir:
-```
-vcdir/
-|
-|- vulcan-exposed-amt
-|- vulcan-exposed-db
-|- vulcan-wpscan
-```
-
-Optionally the command allows filtering by target, by passing a file with a list of the targets to be scanned (only). For example:
-```
-asset1
-asset3
-```
-will prevent `asset2` from being scanned.
-
-It also allows filtering by checktypes, by passing a file with a list of the checktypes to be executed (only). For example:
-```
-vulcan-exposed-amt
-vulcan-wpscan new_options
-```
-will prevent `vulcan-exposed-db` to be executed. Additionally, the `vulcan-wpscan` checktype will use the `new_options` as its default options, instead of the options defined in the `vcdir/vulcan-wpscan` file.
-
-But both filters can not be used at the same time.
-
-Example:
-```bash
-$ vulcan-core-cli cscan -d /opt/vulcan/vcdir/ -o /tmp/
-2017/06/19 16:04:59 parsing the targets and checktypes files
-2017/06/19 16:04:59 executing the scan
-2017/06/19 16:05:02 197 checks executed
-2017/06/19 16:05:02 saving the state to: /tmp/37620de0-2484-4304-9724-1278ad837937.gob
-2017/06/19 16:05:02 scan successfully launched and state stored
-2017/06/19 16:05:02 time elapsed: 3.308487313s
-```
 
 #### scan
 
@@ -97,37 +42,13 @@ Example:
 ```bash
 $ vulcan-core-cli monitor /tmp/37620de0-2484-4304-9724-1278ad837937.gob -i 10
 ```
-#### results
-
-Results will download all the reports and raw files of the `FINISHED` checks into a folder named as the Scan ID. Inside, there will be directories for every checktype that has been launched, and inside those directories there will be directories for every check.
-
-```
-scanXXX/
-|
-|- checktypeXXX/
-|  |
-|  |– assetXXX/
-|  |  |
-|  |  |- raw.txt
-|  |  |- report.txt
-|  |
-|  |- assetYYY/
-|
-|- checktypeYYY/
-```
-
-Example:
-```bash
-$ vulcan-core-cli results /tmp/37620de0-2484-4304-9724-1278ad837937.gob -o /tmp
-2017/06/19 16:15:32 downloading reports
-.......................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
-2017/06/19 16:15:34 reports downloaded and stored in: /tmp/37620de0-2484-4304-9724-1278ad837937
-2017/06/19 16:15:34 time elapsed: 1.69970366s
-```
 
 # Vulcan-core-api
 
-The rest api it's implemented in the [persistence service](https://github.com/adevinta/vulcan-persistence)
+The rest api it's implemented in the
+[vulcan-scan-engine](https://github.com/adevinta/vulcan-scan-engine) except for
+the assettypes and checktypes endpoints that are still implemented in the
+[vulcan-persistence](https://github.com/adevinta/vulcan-persistence).
 
 ### API Definition
 

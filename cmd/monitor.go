@@ -32,7 +32,7 @@ var monitorCmd = &cobra.Command{
 		}
 
 		var err error
-		c, err = cli.NewCLI(scheme, host)
+		c, err = cli.NewCLI(scheme, host, false)
 		if err != nil {
 			return err
 		}

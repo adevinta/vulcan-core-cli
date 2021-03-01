@@ -32,7 +32,7 @@ var abortCmd = &cobra.Command{
 			log.Printf("start time: %v\n", t)
 		}
 
-		c, err = cli.NewCLI(scheme, host)
+		c, err = cli.NewCLI(scheme, host, false)
 		if err != nil {
 			return err
 		}

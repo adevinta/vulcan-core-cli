@@ -5,8 +5,8 @@ import (
 	. "github.com/goadesign/goa/design/apidsl"
 )
 
-var _ = API("vulcan-persistence", func() {
-	Title("Vulcan Persistence")
+var _ = API("vulcan-core", func() {
+	Title("Vulcan Core")
 	Description("Vulnerability Scanning Framework API")
 	Version("1.0")
 	BasePath("/v1")

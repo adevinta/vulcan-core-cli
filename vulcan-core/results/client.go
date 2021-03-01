@@ -1,7 +1,6 @@
 package results
 
 import (
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -18,27 +17,23 @@ type Doer interface {
 // Client implements methods for downloading a report. The client is safe to use
 // concurrently.
 type Client struct {
-	doer     Doer
-	baseAddr *url.URL
+	doer Doer
 }
 
 // NewClient instantiates and returns a new results client.
-func NewClient(baseURL string, d Doer) (*Client, error) {
-	addr, err := url.Parse(baseURL)
-	if err != nil {
-		return nil, err
-	}
-	return &Client{d, addr}, nil
+func NewClient(d Doer) (*Client, error) {
+	return &Client{d}, nil
 }
 
 // GetReport retrieves a report of a check stored on vulcan results. The report
 // is indexed using three parameters: the id of check, the id of the scan the
 // check belongs to and the date the san was run.
-func (c *Client) GetReport(date, scanID, checkID string) (*report.Report, error) {
-	// Copy the address of the base url to avoid race condition.
-	u := *c.baseAddr
-	u.Path = fmt.Sprintf("/v1/reports/dt=%s/scan=%s/%s.json", date, scanID, checkID)
-	resp, err := c.doer.Get(u.String())
+func (c *Client) GetReport(u string) (*report.Report, error) {
+	url, err := url.Parse(u)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := c.doer.Get(url.String())
 	if err != nil {
 		return nil, err
 	}

@@ -8,8 +8,13 @@ import (
 	"time"
 
 	cli "github.com/adevinta/vulcan-core-cli"
+	"github.com/adevinta/vulcan-core-cli/vulcan-core/client"
 
 	"github.com/spf13/cobra"
+)
+
+var (
+	outDir, dryRun string
 )
 
 // scanCmd represents the scan command
@@ -19,15 +24,14 @@ var scanCmd = &cobra.Command{
 	Long: `Executes a scan for the specified checktypes and assets.
 	The command takes two params.
 	The first parameter is a path to a file containing a list of targets one per line e.g:
-	example.com
+	example.com;Hostname
 	anotherexample.com;DomainName
 	Each line must have the following format:
 	target;assettype
-	Only the first field name is mandatory.
 	The fields are separated by a semicolon ";".
 	The second parameter is a path to a file containing a list of checktypes to execute.
 	Each line must have the following format:
-	name;options;queueid
+	name;options
 	Only the first field name is mandatory.
 	The fields are separated by a semicolon ";".`,
 	RunE: func(cmd *cobra.Command, args []string) error {
@@ -41,7 +45,7 @@ var scanCmd = &cobra.Command{
 		}
 
 		var err error
-		c, err = cli.NewCLI(scheme, host)
+		c, err = cli.NewCLI(scheme, host, verbose)
 		if err != nil {
 			return err
 		}
@@ -52,16 +56,16 @@ var scanCmd = &cobra.Command{
 		log.Println("parsing the targets and checktypes files")
 		// Determine the checktypes and assets for the checks that will be
 		// executed.
-		checks, err := createScanChecks(args[0], args[1])
+		tg, err := createScanTargetGroup(args[0], args[1])
 		if err != nil {
 			return err
 		}
 		if verbose {
-			log.Printf("%v\n", checks.ToString())
+			log.Printf("%v\n", tg)
 		}
 
 		log.Println("executing the scan")
-		s, err := c.RunScan(checks, dryRun, multiPart)
+		s, err := c.RunScan(*tg, dryRun)
 		if err != nil {
 			return err
 		}
@@ -100,7 +104,7 @@ func init() {
 
 	scanCmd.Flags().StringVarP(&outDir, "odir", "o", "/tmp", "directory where the result state is saved")
 	scanCmd.Flags().StringVarP(&dryRun, "dry", "y", "", "file to store dry run output payload. Don't execute the scan but generate a json with the payload")
-	scanCmd.Flags().BoolVarP(&multiPart, "multipart", "m", false, "use multipart upload file api")
+
 }
 
 type asset struct {
@@ -108,7 +112,7 @@ type asset struct {
 	assetType string
 }
 
-func createScanChecks(targetsFile, checktypesFile string) (cli.Checks, error) {
+func createScanTargetGroup(targetsFile, checktypesFile string) (*client.ScanTargetsGroup, error) {
 	assets, err := parseTargetsFile(targetsFile)
 	if err != nil {
 		return nil, err
@@ -127,24 +131,30 @@ func createScanChecks(targetsFile, checktypesFile string) (cli.Checks, error) {
 		log.Printf("checktypes %v\n", checktypes)
 	}
 
-	checks := cli.Checks{}
-
-	for _, checktype := range checktypes {
-		var cliAssets []cli.Asset
-
-		for _, asset := range assets {
-			cliAsset := cli.Asset{
-				Target:    asset.target,
-				AssetType: asset.assetType,
-				Options:   checktype.DefaultOptions,
-				QueueID:   checktype.QueueID,
-			}
-			cliAssets = append(cliAssets, cliAsset)
-		}
-		checks[checktype.Name] = cliAssets
+	cts := []*client.ScanChecktype{}
+	for _, c := range checktypes {
+		ct := client.ScanChecktype{Name: &c.Name, Options: &c.DefaultOptions}
+		cts = append(cts, &ct)
 	}
 
-	return checks, nil
+	targetsG := []*client.Target{}
+	for _, a := range assets {
+		t := client.Target{
+			Identifier: &a.target,
+			Type:       &a.assetType,
+		}
+		targetsG = append(targetsG, &t)
+	}
+
+	tg := client.ScanTargetsGroup{
+		ChecktypesGroup: &client.ChecktypesGroup{
+			Checktypes: cts,
+		},
+		TargetGroup: &client.TargetGroup{
+			Targets: targetsG,
+		},
+	}
+	return &tg, nil
 }
 
 // parseTargetsFile is used to read assets from a file.
@@ -159,7 +169,7 @@ func parseTargetsFile(file string) ([]asset, error) {
 	for _, line := range targetLines {
 		// Every line of the file is an asset: a target and optionally the asset type.
 		params := strings.SplitN(line, ";", 2)
-		if len(params) < 1 {
+		if len(params) < 2 {
 			return nil, fmt.Errorf("malformed asset in line: %v", line)
 		}
 
@@ -171,4 +181,34 @@ func parseTargetsFile(file string) ([]asset, error) {
 	}
 
 	return assets, nil
+}
+
+type Checktype struct {
+	Name           string
+	DefaultOptions string
+}
+
+func parseChecktypesFile(file string) ([]Checktype, error) {
+	checktypeLines, err := cli.ReadLines(file)
+	if err != nil {
+		return nil, err
+	}
+
+	var checktypes []Checktype
+
+	for _, line := range checktypeLines {
+		// Every line of the file is a checktype, and options for the checktype
+		// might be specified too.
+		params := strings.SplitN(line, ";", 2)
+		if len(params) < 1 {
+			return nil, fmt.Errorf("malformed checktype in line: %v", line)
+		}
+		checktype := Checktype{Name: params[0]}
+		if len(params) > 1 {
+			checktype.DefaultOptions = params[1]
+		}
+		checktypes = append(checktypes, checktype)
+	}
+
+	return checktypes, nil
 }
