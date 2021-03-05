@@ -11,6 +11,11 @@ var _ = Resource("Scans", func() {
 	Action("index", func() {
 		Routing(GET(""))
 		Description("Get all scans")
+		Params(func() {
+			Param("offset", Integer)
+			Param("limit", Integer)
+			Param("external_id", String)
+		})
 		Response(OK, ScanMediaCollection)
 		Response(InternalServerError)
 		Response(BadRequest)
@@ -22,7 +27,7 @@ var _ = Resource("Scans", func() {
 			Param("id", UUID)
 		})
 		Description("Get a Scan by its ID")
-		Response(OK, ScanMedia)
+		Response(OK, ScanMediaData)
 		Response(NotFound)
 		Response(InternalServerError)
 		Response(BadRequest)
@@ -32,7 +37,7 @@ var _ = Resource("Scans", func() {
 		Routing(POST("/"))
 		Description("Create a new Scan")
 		Payload(ScanPayload)
-		Response(Created)
+		Response(Created, CreateScanMediaData)
 		Response(InternalServerError)
 		Response(BadRequest)
 	})
@@ -46,6 +51,7 @@ var _ = Resource("Scans", func() {
 		Response(OK)
 		Response(InternalServerError)
 		Response(BadRequest)
+		Response(Conflict)
 	})
 
 	Action("checks", func() {
@@ -73,81 +79,75 @@ var _ = Resource("Scans", func() {
 	})
 })
 
-var _ = Resource("FileScans", func() {
-	BasePath("/filescan")
-	Action("upload", func() {
-		Routing(POST("/"))
-		Payload(FileScanPayload)
-		MultipartForm()
-		Description("Create a scan by uploading a file using a multipart form with the scan definition")
-		Response(Created, ScanMediaData)
-		Response(InternalServerError)
-		Response(BadRequest)
-	})
-
-})
-
-var FileScanPayload = Type("FileScanPayload", func() {
-	Attribute("upload", File, "Upload")
-	Attribute("tag", String, "Tag associated with the scan")
-	Attribute("program_id", String, "Program ID")
-	Required("upload")
-})
-
-var ScanData = Type("ScanData", func() {
-	Attribute("size", Integer, func() {
-		Description("Number of checks of the scan")
-	})
-	Required("size")
-})
-
 var ScanPayload = Type("ScanPayload", func() {
-	Attribute("scan", ScanChecksPayload)
+	Attribute("external_id", UUID)
+	Attribute("scheduled_time", DateTime)
+	Attribute("trigger", String)
+	Attribute("tag", String)
+	Attribute("target_groups", ArrayOf(ScanTargetsGroup))
 })
 
-var ScanChecksPayload = Type("ScanChecksPayload", func() {
-	Attribute("checks", ArrayOf(CheckPayload))
-	Required("checks")
+var ScanTargetsGroup = Type("ScanTargetsGroup", func() {
+	Attribute("target_group", TargetGroup)
+	Attribute("checktypes_group", ChecktypesGroup)
 })
 
-// BUG: the type was "application/adevinta.vulcan.api.data+json"
-// but we had to change it because Gorma was not correctly generating some
-// function calls. We should investigate more about it.
+var TargetGroup = Type("TargetGroup", func() {
+	Attribute("name", String)
+	Attribute("options", String)
+	Attribute("targets", ArrayOf(Target))
+})
+
+var Target = Type("Target", func() {
+	Attribute("identifier", String)
+	Attribute("type", String)
+	Attribute("options", String)
+
+})
+
+var ChecktypesGroup = Type("ChecktypesGroup", func() {
+	Attribute("name", String)
+	Attribute("checktypes", ArrayOf(ScanChecktype))
+})
+
+var ScanChecktype = Type("ScanChecktype", func() {
+	Attribute("name", String)
+	Attribute("options", String)
+})
+
+var CreateScanMediaData = MediaType("application/vnd.createscandata+json", func() {
+	Attribute("scan_id", UUID)
+	View("default", func() {
+		Attribute("scan_id")
+	})
+})
+
 var ScanMediaData = MediaType("application/vnd.scandata+json", func() {
 	Attributes(func() {
 		Attribute("id", UUID)
-		Attribute("size", Integer)
-		Attribute("created_at", DateTime)
-		Required("id", "size", "created_at")
+		Attribute("external_id", UUID)
+		Attribute("status", String)
+		Attribute("trigger", String)
+		Attribute("scheduled_time", DateTime)
+		Attribute("start_time", DateTime)
+		Attribute("end_time", DateTime)
+		Attribute("aborted_at", DateTime)
+		Attribute("progress", Number)
+		Attribute("check_count", Integer)
+		Attribute("checks_created", Integer)
+		Required("id", "status")
 	})
 
 	View("default", func() {
 		Attribute("id")
-		Attribute("size", Integer)
-		Attribute("created_at", DateTime)
+		Attribute("status")
+		Attribute("check_count", Integer)
 	})
 })
 
-// BUG: the type was "application/adevinta.vulcan.api.check+json"
-// but we had to change it because Gorma was not correctly generating some
-// function calls. We should investigate more about it.
-var ScanMedia = MediaType("application/vnd.scan+json", func() {
-	Attributes(func() {
-		Attribute("scan", ScanMediaData)
-		Required("scan")
-	})
-
-	View("default", func() {
-		Attribute("scan")
-	})
-})
-
-// BUG: the type was "application/adevinta.vulcan.api.scan+json"
-// but we had to change it because Gorma was not correctly generating some
-// function calls. We should investigate more about it.
 var ScanMediaCollection = MediaType("application/vnd.scans+json", func() {
 	Attributes(func() {
-		Attribute("scans", ArrayOf(ScanData))
+		Attribute("scans", ArrayOf(ScanMediaData))
 		Required("scans")
 	})
 
@@ -156,12 +156,9 @@ var ScanMediaCollection = MediaType("application/vnd.scans+json", func() {
 	})
 })
 
-// BUG: the type was "application/adevinta.vulcan.api.checks+json"
-// but we had to change it because Gorma was not correctly generating some
-// function calls. We should investigate more about it.
 var ChecksMediaCollection = MediaType("application/vnd.checks+json", func() {
 	Attributes(func() {
-		Attribute("checks", ArrayOf(ScanCheckMediaData))
+		Attribute("checks", ArrayOf(CheckMediaData))
 		Required("checks")
 	})
 
@@ -170,31 +167,6 @@ var ChecksMediaCollection = MediaType("application/vnd.checks+json", func() {
 	})
 })
 
-// BUG: the type was "application/adevinta.vulcan.api.data+json"
-// but we had to change it because Gorma was not correctly generating some
-// function calls. We should investigate more about it.
-var ScanCheckMediaData = MediaType("application/vnd.scancheckdata+json", func() {
-	Reference(CheckData)
-
-	Attributes(func() {
-		Attribute("id", UUID)
-		Attribute("checktype_name")
-		Attribute("target")
-		Attribute("status", String)
-		Required("id", "checktype_name", "target", "status")
-	})
-
-	View("default", func() {
-		Attribute("id")
-		Attribute("checktype_name")
-		Attribute("target")
-		Attribute("status")
-	})
-})
-
-// BUG: the type was "application/adevinta.vulcan.api.stats+json"
-// but we had to change it because Gorma was not correctly generating some
-// function calls. We should investigate more about it.
 var StatsMediaCollection = MediaType("application/vnd.stats+json", func() {
 	Attributes(func() {
 		Attribute("checks", ArrayOf(Stat))
@@ -206,9 +178,6 @@ var StatsMediaCollection = MediaType("application/vnd.stats+json", func() {
 	})
 })
 
-// BUG: the type was "application/adevinta.vulcan.api.stat+json"
-// but we had to change it because Gorma was not correctly generating some
-// function calls. We should investigate more about it.
 var Stat = MediaType("application/vnd.stat+json", func() {
 	Attributes(func() {
 		Attribute("status", String)

@@ -32,7 +32,7 @@ var (
 
 // CheckData contains the info regarding a check of a scan.
 type CheckData struct {
-	coreclient.Scancheckdata
+	coreclient.Checkdata
 	Report ReportData
 }
 
@@ -51,7 +51,7 @@ type ScanData struct {
 
 // CheckReportClient defines the services needed by the concurrent client.
 type CheckReportClient interface {
-	GetReport(date, scanID, checkID string) (*report.Report, error)
+	GetReport(url string) (*report.Report, error)
 }
 
 // Client allows to get the reports of a scan concurrently.
@@ -84,15 +84,10 @@ func (c *Client) Data(ctx context.Context, ID string) (ScanData, error) {
 		return ScanData{}, fmt.Errorf("error querying scan in vulcan core %w", err)
 	}
 
-	scan, err := c.coreC.DecodeScan(resp)
+	/*scan, err := c.coreC.DecodeScandata(resp)
 	if err != nil {
 		return ScanData{}, err
-	}
-
-	// We need the date of the scan in order to build the path for the reports
-	// of the checks belonging to it.
-
-	scanDate := scan.Scan.CreatedAt.Format("2006-01-02")
+	}*/
 
 	resp, err = c.coreC.ChecksScans(ctx, coreclient.ChecksScansPath(scanID))
 	if resp.StatusCode != http.StatusOK {
@@ -127,7 +122,7 @@ func (c *Client) Data(ctx context.Context, ID string) (ScanData, error) {
 					// Skip the a nil check.
 					continue
 				}
-				checks <- check{*c, ID, scanDate}
+				checks <- check{*c, ID}
 			}
 		}
 		close(checks)
@@ -151,7 +146,7 @@ func (c *Client) Data(ctx context.Context, ID string) (ScanData, error) {
 	for _, r := range rs.reports {
 		cid := r.CheckData.ID.String()
 		// We add the check data in any case.
-		data := CheckData{Scancheckdata: r.CheckData}
+		data := CheckData{Checkdata: r.CheckData}
 		// If we got an error downloading a report we store that error.
 		if r.Err != nil {
 			data.Report.Err = r.Err
@@ -165,14 +160,13 @@ func (c *Client) Data(ctx context.Context, ID string) (ScanData, error) {
 		results[cid] = data
 	}
 	data := ScanData{
-		CreationDate: scanDate,
-		ChecksData:   results,
+		ChecksData: results,
 	}
 	return data, nil
 }
 
 type reportResult struct {
-	CheckData coreclient.Scancheckdata
+	CheckData coreclient.Checkdata
 	R         *report.Report
 	Err       error
 }
@@ -189,9 +183,8 @@ func (r *reportResults) Add(result reportResult) {
 }
 
 type check struct {
-	Check    coreclient.Scancheckdata
-	ScanID   string
-	ScanDate string
+	Check  coreclient.Checkdata
+	ScanID string
 }
 
 func downloadCheckReport(done <-chan struct{}, checks <-chan check, results *reportResults, rclient CheckReportClient) {
@@ -208,7 +201,8 @@ LOOP:
 				results.Add(r)
 				continue
 			}
-			report, err := rclient.GetReport(c.ScanDate, c.ScanID, checkID)
+			reportURL := *c.Check.Report
+			report, err := rclient.GetReport(reportURL)
 			if err != nil {
 				err = fmt.Errorf("getting results for check-id: %s, %w", checkID, err)
 			}

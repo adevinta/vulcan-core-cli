@@ -14,6 +14,7 @@ import (
 	"net/http"
 	"os"
 	"sort"
+	"strings"
 	"time"
 
 	"github.com/goadesign/goa"
@@ -26,19 +27,18 @@ import (
 // ScanStatus contains the list of possible status of a check, and indicates
 // whether the status is a final state or not.
 var ScanStatus = map[string]bool{
-	"ABORTED":   true,
-	"TIMEOUT":   true,
-	"CLEANUP":   false,
-	"CREATED":   false,
-	"FAILED":    true,
-	"FINISHED":  true,
-	"KILLED":    true,
-	"MALFORMED": true,
-	"QUEUED":    false,
-	"RUNNING":   false,
+	"INCONCLUSIVE": true,
+	"ABORTED":      true,
+	"TIMEOUT":      true,
+	"CLEANUP":      false,
+	"CREATED":      false,
+	"FAILED":       true,
+	"FINISHED":     true,
+	"KILLED":       true,
+	"MALFORMED":    true,
+	"QUEUED":       false,
+	"RUNNING":      false,
 }
-
-const fileScanAPIPath = "/v1/filescan"
 
 // Scan defines a set of checks that have been executed together.
 type Scan struct {
@@ -171,13 +171,6 @@ func (sts *Stats) Print(w io.Writer) {
 	}
 }
 
-// Checks is a set of checktypes with the associated Assets to be checked.
-type Checks map[string][]Asset
-
-func (c Checks) ToString() string {
-	return toString(c)
-}
-
 // Asset defines the asset where a concrete checktype will be executed
 // with a set of options and a concrete queue.
 type Asset struct {
@@ -193,12 +186,12 @@ type CLI struct {
 	ctx    context.Context
 }
 
-func NewCLI(scheme, host string) (*CLI, error) {
+func NewCLI(scheme, host string, verbose bool) (*CLI, error) {
 	httpClient := newHTTPClient()
 	c := client.New(goaclient.HTTPClientDoer(httpClient))
 	c.Client.Scheme = scheme
 	c.Client.Host = host
-
+	c.Client.Dump = verbose
 	var buf bytes.Buffer
 	logger := goa.NewLogger(log.New(&buf, "", log.LstdFlags))
 
@@ -212,120 +205,56 @@ func NewCLI(scheme, host string) (*CLI, error) {
 }
 
 // RunScan starts execution, or simulates, the execution of a scan composed by a set of checks.
-// Uses the rest api or the multipart file upload api depending on the params.
-func (cli *CLI) RunScan(checks Checks, dryRun string, useMultipart bool) (*Scan, error) {
-	var checksPayload []*client.CheckPayload
-
-	for checktypeName, assets := range checks {
-		// NOTE: this is a big gotcha. If you use &checktypeName directly instead,
-		// the chektypes will be the same for all the checks in checksPayload.
-		checktypeName := checktypeName
-
-		for _, asset := range assets {
-			// NOTE: fix same gotcha specified above.
-			opts := asset.Options
-			var queueID *uuid.UUID
-			if asset.QueueID != "" {
-				id, err := uuid.FromString(asset.QueueID)
-				if err != nil {
-					return nil, fmt.Errorf("error wrong queue id, %v", err)
-				}
-				queueID = &id
-			}
-			var assetType *string
-			if asset.AssetType != "" {
-				assetType = &asset.AssetType
-			}
-			checkPayload := &client.CheckPayload{
-				Check: &client.CheckData{
-					ChecktypeName: &checktypeName,
-					Target:        asset.Target,
-					Options:       &opts,
-					JobqueueID:    queueID,
-					Assettype:     assetType,
-				},
-			}
-			checksPayload = append(checksPayload, checkPayload)
-		}
+func (cli *CLI) RunScan(tg client.ScanTargetsGroup, dryRun string) (*Scan, error) {
+	extID := uuid.NewV4()
+	now := time.Now()
+	trigger := "vulcan-core-cli"
+	payload := client.ScanPayload{
+		ExternalID:    &extID,
+		ScheduledTime: &now,
+		Trigger:       &trigger,
+		TargetGroups:  []*client.ScanTargetsGroup{&tg},
 	}
-
-	return cli.runScan(checksPayload, dryRun, useMultipart)
-}
-
-func (cli *CLI) runScan(checks []*client.CheckPayload, dryRun string, useFileScan bool) (*Scan, error) {
-
-	if dryRun != "" && useFileScan {
-		return nil, errors.New("both dryRun and useFileScan can not be specified")
-	}
-
-	payload := &client.ScanPayload{
-		Scan: &client.ScanChecksPayload{
-			Checks: checks,
-		},
-	}
-	var err error
-	var scanFile *os.File
-	if dryRun != "" || useFileScan {
-		content, err := json.Marshal(&payload)
-		if err != nil {
-			return nil, err
-		}
-
-		if dryRun != "" {
-			scanFile, err = os.Create(dryRun)
-		} else {
-			scanFile, err = ioutil.TempFile("", "scan_")
-		}
-		if err != nil {
-			return nil, err
-		}
-		defer scanFile.Close()
-		if _, err = scanFile.Write(content); err != nil {
-			return nil, err
-		}
-		if dryRun != "" {
-			return nil, nil
-		}
-	}
-	var scan *client.Scan
-	if useFileScan {
-		scan, err = cli.startScanByMultipartUpload(scanFile.Name())
-	} else {
-		scan, err = cli.startScanByRestAPI(payload)
-	}
+	path := client.CreateScansPath()
+	path = strings.TrimRight(path, "/")
+	resp, err := cli.c.CreateScans(context.Background(), path, &payload)
 	if err != nil {
 		return nil, err
 	}
-	if err := scan.Validate(); err != nil {
-		return nil, err
-	}
-
-	s := newScan(scan.Scan.ID, len(checks))
-	return s, nil
-}
-
-func (cli *CLI) startScanByRestAPI(payload *client.ScanPayload) (*client.Scan, error) {
-
-	c := cli.c
-	ctx := cli.ctx
-	res, err := c.CreateScans(ctx, client.CreateScansPath(), payload)
+	cscan, err := cli.c.DecodeCreatescandata(resp)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
-	return c.DecodeScan(res)
-}
-
-func (cli *CLI) startScanByMultipartUpload(file string) (*client.Scan, error) {
-	payload := client.FileScanPayload{
-		Upload: file,
-	}
-	resp, err := cli.c.UploadFileScans(context.Background(), client.UploadFileScansPath(), &payload)
+	id := cscan.ScanID
+	showScanPath := client.ShowScansPath(*id)
+	resp, err = cli.c.ShowScans(context.Background(), showScanPath)
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close() //nolint
-	return cli.c.DecodeScan(resp)
+	sdata, err := cli.c.DecodeScandata(resp)
+	if err != nil {
+		return nil, err
+	}
+	statsPath := client.StatsScansPath(*id)
+	resp, err = cli.c.StatsScans(context.Background(), statsPath)
+	if err != nil {
+		return nil, err
+	}
+	stats, err := cli.c.DecodeStats(resp)
+	if err != nil {
+		return nil, err
+	}
+	s := Stats{GroupByStatus: map[string]int{}}
+	for _, c := range stats.Checks {
+		s.GroupByStatus[c.Status] = c.Total
+	}
+	ret := Scan{
+		ID:           *id,
+		ExpectedSize: *sdata.CheckCount,
+		StartTime:    now,
+		Stats:        &s,
+	}
+	return &ret, nil
 }
 
 func (cli *CLI) UpdateStats(scan *Scan) error {
@@ -353,8 +282,8 @@ func (cli *CLI) UpdateStats(scan *Scan) error {
 func (cli *CLI) AbortScan(ID uuid.UUID) error {
 	c := cli.c
 	ctx := cli.ctx
-
-	res, err := c.AbortScans(ctx, client.AbortScansPath(ID))
+	path := client.AbortScansPath(ID)
+	res, err := c.AbortScans(ctx, path)
 	if err != nil {
 		return err
 	}
