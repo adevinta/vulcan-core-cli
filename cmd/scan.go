@@ -167,16 +167,14 @@ func parseTargetsFile(file string) ([]asset, error) {
 	var assets []asset
 
 	for _, line := range targetLines {
-		// Every line of the file is an asset: a target and optionally the asset type.
+		// Every line of the file is an asset: a target and the asset type.
 		params := strings.SplitN(line, ";", 2)
 		if len(params) < 2 {
 			return nil, fmt.Errorf("malformed asset in line: %v", line)
 		}
 
 		asset := asset{target: params[0]}
-		if len(params) > 1 {
-			asset.assetType = params[1]
-		}
+		asset.assetType = params[1]
 		assets = append(assets, asset)
 	}
 

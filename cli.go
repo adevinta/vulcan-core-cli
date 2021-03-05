@@ -27,19 +27,18 @@ import (
 // ScanStatus contains the list of possible status of a check, and indicates
 // whether the status is a final state or not.
 var ScanStatus = map[string]bool{
-	"ABORTED":   true,
-	"TIMEOUT":   true,
-	"CLEANUP":   false,
-	"CREATED":   false,
-	"FAILED":    true,
-	"FINISHED":  true,
-	"KILLED":    true,
-	"MALFORMED": true,
-	"QUEUED":    false,
-	"RUNNING":   false,
+	"INCONCLUSIVE": true,
+	"ABORTED":      true,
+	"TIMEOUT":      true,
+	"CLEANUP":      false,
+	"CREATED":      false,
+	"FAILED":       true,
+	"FINISHED":     true,
+	"KILLED":       true,
+	"MALFORMED":    true,
+	"QUEUED":       false,
+	"RUNNING":      false,
 }
-
-const fileScanAPIPath = "/v1/filescan"
 
 // Scan defines a set of checks that have been executed together.
 type Scan struct {

@@ -69,6 +69,9 @@ type (
 
 	// IndexScansCommand is the command line data structure for the index action of Scans
 	IndexScansCommand struct {
+		ExternalID  string
+		Limit       int
+		Offset      int
 		PrettyPrint bool
 	}
 
@@ -140,7 +143,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 Payload example:
 
 {
-   "external_id": "cfb906e1-a99b-4613-849a-f2bbce19db63",
+   "external_id": "18fac47f-736d-465e-8f3e-1d545c4de09c",
    "scheduled_time": "2014-02-20T01:06:30Z",
    "tag": "Et sunt sapiente nostrum aliquid natus quae.",
    "target_groups": [
@@ -715,7 +718,7 @@ func (cmd *IndexScansCommand) Run(c *client.Client, args []string) error {
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
-	resp, err := c.IndexScans(ctx, path)
+	resp, err := c.IndexScans(ctx, path, stringFlagVal("external_id", cmd.ExternalID), intFlagVal("limit", cmd.Limit), intFlagVal("offset", cmd.Offset))
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
@@ -727,6 +730,12 @@ func (cmd *IndexScansCommand) Run(c *client.Client, args []string) error {
 
 // RegisterFlags registers the command flags with the command line.
 func (cmd *IndexScansCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
+	var externalID string
+	cc.Flags().StringVar(&cmd.ExternalID, "external_id", externalID, ``)
+	var limit int
+	cc.Flags().IntVar(&cmd.Limit, "limit", limit, ``)
+	var offset int
+	cc.Flags().IntVar(&cmd.Offset, "offset", offset, ``)
 }
 
 // Run makes the HTTP request corresponding to the ShowScansCommand command.

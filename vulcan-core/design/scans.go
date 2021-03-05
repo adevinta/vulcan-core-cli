@@ -11,6 +11,11 @@ var _ = Resource("Scans", func() {
 	Action("index", func() {
 		Routing(GET(""))
 		Description("Get all scans")
+		Params(func() {
+			Param("offset", Integer)
+			Param("limit", Integer)
+			Param("external_id", String)
+		})
 		Response(OK, ScanMediaCollection)
 		Response(InternalServerError)
 		Response(BadRequest)
@@ -46,6 +51,7 @@ var _ = Resource("Scans", func() {
 		Response(OK)
 		Response(InternalServerError)
 		Response(BadRequest)
+		Response(Conflict)
 	})
 
 	Action("checks", func() {
@@ -125,6 +131,7 @@ var ScanMediaData = MediaType("application/vnd.scandata+json", func() {
 		Attribute("scheduled_time", DateTime)
 		Attribute("start_time", DateTime)
 		Attribute("end_time", DateTime)
+		Attribute("aborted_at", DateTime)
 		Attribute("progress", Number)
 		Attribute("check_count", Integer)
 		Attribute("checks_created", Integer)

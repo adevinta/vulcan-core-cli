@@ -14,6 +14,7 @@ import (
 	uuid "github.com/goadesign/goa/uuid"
 	"net/http"
 	"net/url"
+	"strconv"
 )
 
 // AbortScansPath computes a request path to the abort action of Scans.
@@ -119,8 +120,8 @@ func IndexScansPath() string {
 }
 
 // Get all scans
-func (c *Client) IndexScans(ctx context.Context, path string) (*http.Response, error) {
-	req, err := c.NewIndexScansRequest(ctx, path)
+func (c *Client) IndexScans(ctx context.Context, path string, externalID *string, limit *int, offset *int) (*http.Response, error) {
+	req, err := c.NewIndexScansRequest(ctx, path, externalID, limit, offset)
 	if err != nil {
 		return nil, err
 	}
@@ -128,12 +129,25 @@ func (c *Client) IndexScans(ctx context.Context, path string) (*http.Response, e
 }
 
 // NewIndexScansRequest create the request corresponding to the index action endpoint of the Scans resource.
-func (c *Client) NewIndexScansRequest(ctx context.Context, path string) (*http.Request, error) {
+func (c *Client) NewIndexScansRequest(ctx context.Context, path string, externalID *string, limit *int, offset *int) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
 		scheme = "http"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
+	values := u.Query()
+	if externalID != nil {
+		values.Set("external_id", *externalID)
+	}
+	if limit != nil {
+		tmp12 := strconv.Itoa(*limit)
+		values.Set("limit", tmp12)
+	}
+	if offset != nil {
+		tmp13 := strconv.Itoa(*offset)
+		values.Set("offset", tmp13)
+	}
+	u.RawQuery = values.Encode()
 	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), nil)
 	if err != nil {
 		return nil, err

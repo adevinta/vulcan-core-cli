@@ -48,7 +48,7 @@ definitions:
     example:
       assettype: Ut magnam atque sint omnis.
       checktype_name: Voluptatem in illum hic rerum itaque minus.
-      id: fd383c96-1dd3-4619-b24d-b108ee0939eb
+      id: aab6b7bd-5800-449b-8769-e9ba06139af1
       image: Id deserunt dolorem quia nisi totam velit.
       options: Sapiente ipsum.
       raw: Commodi est sit eos incidunt numquam excepturi.
@@ -64,7 +64,7 @@ definitions:
         example: Voluptatem in illum hic rerum itaque minus.
         type: string
       id:
-        example: fd383c96-1dd3-4619-b24d-b108ee0939eb
+        example: aab6b7bd-5800-449b-8769-e9ba06139af1
         format: uuid
         type: string
       image:
@@ -101,7 +101,7 @@ definitions:
       checks:
       - assettype: Ut magnam atque sint omnis.
         checktype_name: Voluptatem in illum hic rerum itaque minus.
-        id: fd383c96-1dd3-4619-b24d-b108ee0939eb
+        id: aab6b7bd-5800-449b-8769-e9ba06139af1
         image: Id deserunt dolorem quia nisi totam velit.
         options: Sapiente ipsum.
         raw: Commodi est sit eos incidunt numquam excepturi.
@@ -114,7 +114,7 @@ definitions:
         example:
         - assettype: Ut magnam atque sint omnis.
           checktype_name: Voluptatem in illum hic rerum itaque minus.
-          id: fd383c96-1dd3-4619-b24d-b108ee0939eb
+          id: aab6b7bd-5800-449b-8769-e9ba06139af1
           image: Id deserunt dolorem quia nisi totam velit.
           options: Sapiente ipsum.
           raw: Commodi est sit eos incidunt numquam excepturi.
@@ -139,7 +139,7 @@ definitions:
         - Maiores esse veniam dolorum non rerum accusantium.
         description: u3d4ij35le
         enabled: true
-        id: b1d36282-0bd9-4749-9371-c7c382ad0d4d
+        id: e847c6c8-e4b1-4488-b283-62e5c06302ba
         image: Tempore qui libero sequi.
         name: nmap
         options: Possimus praesentium ut.
@@ -164,7 +164,7 @@ definitions:
       - Maiores esse veniam dolorum non rerum accusantium.
       description: u3d4ij35le
       enabled: true
-      id: b1d36282-0bd9-4749-9371-c7c382ad0d4d
+      id: e847c6c8-e4b1-4488-b283-62e5c06302ba
       image: Tempore qui libero sequi.
       name: nmap
       options: Possimus praesentium ut.
@@ -195,7 +195,7 @@ definitions:
         example: true
         type: boolean
       id:
-        example: b1d36282-0bd9-4749-9371-c7c382ad0d4d
+        example: e847c6c8-e4b1-4488-b283-62e5c06302ba
         format: uuid
         type: string
       image:
@@ -249,7 +249,7 @@ definitions:
         - Maiores esse veniam dolorum non rerum accusantium.
         description: u3d4ij35le
         enabled: true
-        id: b1d36282-0bd9-4749-9371-c7c382ad0d4d
+        id: e847c6c8-e4b1-4488-b283-62e5c06302ba
         image: Tempore qui libero sequi.
         name: nmap
         options: Possimus praesentium ut.
@@ -265,7 +265,7 @@ definitions:
         - Maiores esse veniam dolorum non rerum accusantium.
         description: u3d4ij35le
         enabled: true
-        id: b1d36282-0bd9-4749-9371-c7c382ad0d4d
+        id: e847c6c8-e4b1-4488-b283-62e5c06302ba
         image: Tempore qui libero sequi.
         name: nmap
         options: Possimus praesentium ut.
@@ -284,7 +284,7 @@ definitions:
           - Maiores esse veniam dolorum non rerum accusantium.
           description: u3d4ij35le
           enabled: true
-          id: b1d36282-0bd9-4749-9371-c7c382ad0d4d
+          id: e847c6c8-e4b1-4488-b283-62e5c06302ba
           image: Tempore qui libero sequi.
           name: nmap
           options: Possimus praesentium ut.
@@ -300,7 +300,7 @@ definitions:
           - Maiores esse veniam dolorum non rerum accusantium.
           description: u3d4ij35le
           enabled: true
-          id: b1d36282-0bd9-4749-9371-c7c382ad0d4d
+          id: e847c6c8-e4b1-4488-b283-62e5c06302ba
           image: Tempore qui libero sequi.
           name: nmap
           options: Possimus praesentium ut.
@@ -343,10 +343,10 @@ definitions:
   Createscandata:
     description: Createscandata media type (default view)
     example:
-      scan_id: 06f66385-3e6e-4773-90e9-9c68879c7ac0
+      scan_id: 1aa74790-5c72-499f-aa38-43c0a60926b3
     properties:
       scan_id:
-        example: 06f66385-3e6e-4773-90e9-9c68879c7ac0
+        example: 1aa74790-5c72-499f-aa38-43c0a60926b3
         format: uuid
         type: string
     title: 'Mediatype identifier: application/vnd.createscandata+json; view=default'
@@ -366,7 +366,7 @@ definitions:
     type: object
   ScanPayload:
     example:
-      external_id: cfb906e1-a99b-4613-849a-f2bbce19db63
+      external_id: 18fac47f-736d-465e-8f3e-1d545c4de09c
       scheduled_time: "2014-02-20T01:06:30Z"
       tag: Et sunt sapiente nostrum aliquid natus quae.
       target_groups:
@@ -413,7 +413,7 @@ definitions:
       trigger: Vero maiores sit vel.
     properties:
       external_id:
-        example: cfb906e1-a99b-4613-849a-f2bbce19db63
+        example: 18fac47f-736d-465e-8f3e-1d545c4de09c
         format: uuid
         type: string
       scheduled_time:
@@ -505,20 +505,20 @@ definitions:
   Scandata:
     description: Scandata media type (default view)
     example:
-      check_count: 1246849830897179623
-      id: 43e22926-4258-4915-b214-4356260d6f05
-      status: Voluptatem error aspernatur doloremque quia.
+      check_count: 2090702954143580636
+      id: d9e75b86-4221-41d3-8d79-1dc6430668ca
+      status: Error aspernatur doloremque quia.
     properties:
       check_count:
-        example: 1246849830897179623
+        example: 2090702954143580636
         format: int64
         type: integer
       id:
-        example: 43e22926-4258-4915-b214-4356260d6f05
+        example: d9e75b86-4221-41d3-8d79-1dc6430668ca
         format: uuid
         type: string
       status:
-        example: Voluptatem error aspernatur doloremque quia.
+        example: Error aspernatur doloremque quia.
         type: string
     required:
     - id
@@ -529,27 +529,27 @@ definitions:
     description: Scans media type (default view)
     example:
       scans:
-      - check_count: 1246849830897179623
-        id: 43e22926-4258-4915-b214-4356260d6f05
-        status: Voluptatem error aspernatur doloremque quia.
-      - check_count: 1246849830897179623
-        id: 43e22926-4258-4915-b214-4356260d6f05
-        status: Voluptatem error aspernatur doloremque quia.
-      - check_count: 1246849830897179623
-        id: 43e22926-4258-4915-b214-4356260d6f05
-        status: Voluptatem error aspernatur doloremque quia.
+      - check_count: 2090702954143580636
+        id: d9e75b86-4221-41d3-8d79-1dc6430668ca
+        status: Error aspernatur doloremque quia.
+      - check_count: 2090702954143580636
+        id: d9e75b86-4221-41d3-8d79-1dc6430668ca
+        status: Error aspernatur doloremque quia.
+      - check_count: 2090702954143580636
+        id: d9e75b86-4221-41d3-8d79-1dc6430668ca
+        status: Error aspernatur doloremque quia.
     properties:
       scans:
         example:
-        - check_count: 1246849830897179623
-          id: 43e22926-4258-4915-b214-4356260d6f05
-          status: Voluptatem error aspernatur doloremque quia.
-        - check_count: 1246849830897179623
-          id: 43e22926-4258-4915-b214-4356260d6f05
-          status: Voluptatem error aspernatur doloremque quia.
-        - check_count: 1246849830897179623
-          id: 43e22926-4258-4915-b214-4356260d6f05
-          status: Voluptatem error aspernatur doloremque quia.
+        - check_count: 2090702954143580636
+          id: d9e75b86-4221-41d3-8d79-1dc6430668ca
+          status: Error aspernatur doloremque quia.
+        - check_count: 2090702954143580636
+          id: d9e75b86-4221-41d3-8d79-1dc6430668ca
+          status: Error aspernatur doloremque quia.
+        - check_count: 2090702954143580636
+          id: d9e75b86-4221-41d3-8d79-1dc6430668ca
+          status: Error aspernatur doloremque quia.
         items:
           $ref: '#/definitions/Scandata'
         type: array
@@ -834,6 +834,19 @@ paths:
     get:
       description: Get all scans
       operationId: Scans#index
+      parameters:
+      - in: query
+        name: external_id
+        required: false
+        type: string
+      - in: query
+        name: limit
+        required: false
+        type: integer
+      - in: query
+        name: offset
+        required: false
+        type: integer
       produces:
       - application/vnd.goa.error
       - application/vnd.scans+json
@@ -929,6 +942,8 @@ paths:
           description: OK
         "400":
           description: Bad Request
+        "409":
+          description: Conflict
         "500":
           description: Server error
           schema:
@@ -1017,6 +1032,8 @@ produces:
 responses:
   BadRequest:
     description: Bad Request
+  Conflict:
+    description: Conflict
   Created:
     description: Resource created
   InternalServerError:
