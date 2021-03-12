@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Copyright 2021 Adevinta
+
 set -e
 
 function delete_dir {
