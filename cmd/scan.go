@@ -137,12 +137,14 @@ func createScanTargetGroup(targetsFile, checktypesFile string) (*client.ScanTarg
 
 	cts := []*client.ScanChecktype{}
 	for _, c := range checktypes {
+		c := c
 		ct := client.ScanChecktype{Name: &c.Name, Options: &c.DefaultOptions}
 		cts = append(cts, &ct)
 	}
 
 	targetsG := []*client.Target{}
 	for _, a := range assets {
+		a := a
 		t := client.Target{
 			Identifier: &a.target,
 			Type:       &a.assetType,
