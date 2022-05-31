@@ -3,7 +3,7 @@ module github.com/adevinta/vulcan-core-cli
 go 1.18
 
 require (
-	github.com/adevinta/vulcan-report v0.0.0-20190503133936-d8a2d4cb18ff
+	github.com/adevinta/vulcan-report v1.0.0-rc1
 	github.com/goadesign/goa v1.4.3
 	github.com/jroimartin/gocui v0.3.1-0.20170820132233-eb73455bec6f
 	github.com/spf13/cobra v0.0.3
