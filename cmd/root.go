@@ -41,7 +41,7 @@ func Execute() {
 }
 
 func init() {
-	RootCmd.PersistentFlags().StringVarP(&scheme, "scheme", "s", "https", "scheme of the vulcan-persistence endpoint")
-	RootCmd.PersistentFlags().StringVarP(&host, "Host", "H", "127.0.0.1", "vulcan-persistence endpoint")
+	RootCmd.PersistentFlags().StringVarP(&scheme, "scheme", "s", "https", "scheme of the vulcan-scan-engine endpoint")
+	RootCmd.PersistentFlags().StringVarP(&host, "Host", "H", "127.0.0.1", "vulcan-scan-engine endpoint")
 	RootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "prints verbose information during command execution")
 }
