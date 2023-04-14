@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/adevinta/vulcan-report v1.0.0
 	github.com/goadesign/goa v1.4.3
-	github.com/jroimartin/gocui v0.3.1-0.20170820132233-eb73455bec6f
+	github.com/jroimartin/gocui v0.5.0
 	github.com/spf13/cobra v0.0.3
 )
 
@@ -22,8 +22,8 @@ require (
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/manveru/faker v0.0.0-20171103152722-9fbc68a78c4d // indirect
 	github.com/manveru/gobdd v0.0.0-20131210092515-f1a17fdd710b // indirect
-	github.com/mattn/go-runewidth v0.0.4 // indirect
-	github.com/nsf/termbox-go v0.0.0-20190817171036-93860e161317 // indirect
+	github.com/mattn/go-runewidth v0.0.9 // indirect
+	github.com/nsf/termbox-go v1.1.1 // indirect
 	github.com/onsi/ginkgo v1.10.3 // indirect
 	github.com/onsi/gomega v1.7.1 // indirect
 	github.com/pascaldekloe/goe v0.1.0 // indirect
