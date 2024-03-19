@@ -13,7 +13,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -62,7 +61,7 @@ func newScan(id uuid.UUID, e int) *Scan {
 }
 
 func LoadState(stateFile string) (*Scan, error) {
-	b, err := ioutil.ReadFile(stateFile)
+	b, err := os.ReadFile(stateFile)
 	if err != nil {
 		return nil, err
 	}

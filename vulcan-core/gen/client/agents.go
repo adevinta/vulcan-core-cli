@@ -10,9 +10,10 @@ package client
 import (
 	"context"
 	"fmt"
-	uuid "github.com/goadesign/goa/uuid"
 	"net/http"
 	"net/url"
+
+	uuid "github.com/goadesign/goa/uuid"
 )
 
 // IndexAgentsPath computes a request path to the index action of Agents.

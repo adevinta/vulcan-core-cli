@@ -8,9 +8,10 @@
 package client
 
 import (
+	"unicode/utf8"
+
 	"github.com/goadesign/goa"
 	uuid "github.com/goadesign/goa/uuid"
-	"unicode/utf8"
 )
 
 // agentData user type.

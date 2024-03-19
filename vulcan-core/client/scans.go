@@ -11,10 +11,11 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	uuid "github.com/goadesign/goa/uuid"
 	"net/http"
 	"net/url"
 	"strconv"
+
+	uuid "github.com/goadesign/goa/uuid"
 )
 
 // AbortScansPath computes a request path to the abort action of Scans.

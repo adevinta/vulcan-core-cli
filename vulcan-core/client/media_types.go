@@ -8,9 +8,10 @@
 package client
 
 import (
+	"net/http"
+
 	"github.com/goadesign/goa"
 	uuid "github.com/goadesign/goa/uuid"
-	"net/http"
 )
 
 // Assettype media type (default view)

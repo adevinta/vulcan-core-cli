@@ -11,7 +11,6 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
@@ -35,7 +34,7 @@ func (c *Client) DownloadSwaggerJSON(ctx context.Context, dest string) (int64, e
 	}
 	if resp.StatusCode != 200 {
 		var body string
-		if b, err := ioutil.ReadAll(resp.Body); err != nil {
+		if b, err := io.ReadAll(resp.Body); err != nil {
 			if len(b) > 0 {
 				body = ": " + string(b)
 			}

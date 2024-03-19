@@ -5,7 +5,7 @@ Copyright 2019 Adevinta
 package results
 
 import (
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 
@@ -43,7 +43,7 @@ func (c *Client) GetReport(u string) (*report.Report, error) {
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}

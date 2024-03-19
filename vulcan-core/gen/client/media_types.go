@@ -8,11 +8,12 @@
 package client
 
 import (
-	"github.com/goadesign/goa"
-	uuid "github.com/goadesign/goa/uuid"
 	"net/http"
 	"time"
 	"unicode/utf8"
+
+	"github.com/goadesign/goa"
+	uuid "github.com/goadesign/goa/uuid"
 )
 
 // Agent media type (default view)
